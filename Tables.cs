@@ -15,12 +15,11 @@ namespace parser
 
         private List<char> Input = new List<char>();
 
-        private Stack<string> ParseStack = new Stack<string>();
 
         private static Dictionary<int, List<string>> Productions = new Dictionary<int, List<string>>();
         private static Dictionary<string, List<string>> First = new Dictionary<string, List<string>>();
         private static Dictionary<string, List<string>> Follow = new Dictionary<string, List<string>>();
-        private static Dictionary<string, List<string>> FirstPlus = new Dictionary<string, List<string>>();
+        private static Dictionary<string, Dictionary<string, List<string>>> FirstPlus = new Dictionary<string, Dictionary<string, List<string>>>();
 
         private static Dictionary<string, Dictionary<string, int>> Table = new Dictionary<string, Dictionary<string, int>>();
 
@@ -38,7 +37,21 @@ namespace parser
             "+",
             "-",
             "*",
-            "/"
+            "/",
+            "eof"
+        };
+
+        private static List<string> SampleTerminals = new List<string>
+        {
+            "num",
+            "name",
+            "(",
+            ")",
+            "+",
+            "-",
+            "*",
+            "/",
+            "eof"
         };
 
         private static List<string> NonTerminals = new List<string>
@@ -54,6 +67,16 @@ namespace parser
             "GFactor",
             "PosVal",
             "SpaceNegVal"
+        };
+
+        private static List<string> SampleNonTerminals = new List<string>
+        {
+            "Goal",
+            "Expr",
+            "Expr'",
+            "Term",
+            "Term'",
+            "Factor"
         };
 
         private static List<char> StoppingChar = new List<char>
@@ -73,34 +96,38 @@ namespace parser
         public TableMaker()
         {
             TakeInput();
-            FillProduction();
-            // FillSampleProduction();
+            // FillProduction();
+            FillSampleProduction();
             // FillSampleTable();
             FillTable();
+            // PrintTable();
+            PrintFirst();
+            PrintFollow();
 
             ParseIndex = 0;
             
-            // while (ParseIndex < Input.Count)
-            // {
-            //     if (Parse())
-            //     {
-            //         Console.WriteLine("Valid");
-            //     }
-            //     else
-            //     {
-            //         Console.WriteLine("Invalid");
-            //     }
-            // }
+            while (ParseIndex < Input.Count)
+            {
+                if (Parse())
+                {
+                    Console.WriteLine("Valid");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid");
+                }
+            }
         }
 
         private bool Parse()
         {
+            Stack<string> parseStack = new Stack<string>();
             string word = NextWord();
 
-            ParseStack.Push("eof");
-            ParseStack.Push("Goal");
+            parseStack.Push("eof");
+            parseStack.Push("Goal");
 
-            string focus = ParseStack.Peek();
+            string focus = parseStack.Peek();
 
             while (true)
             {
@@ -112,7 +139,7 @@ namespace parser
                 {
                     if (focus == word)
                     {
-                        ParseStack.Pop();
+                        parseStack.Pop();
                         word = NextWord();
                     }
                     else
@@ -125,15 +152,15 @@ namespace parser
 
                     if (Table[focus][word] != -1)
                     {
-                        ParseStack.Pop();
+                        parseStack.Pop();
 
                         var production = Productions[Table[focus][word]];
 
-                        for (int i = production.Count - 1; i != -1; i--)
+                        for (int i = production.Count - 1; i != 0; i--)
                         {
                             if (production[i] != "e")
                             {
-                                ParseStack.Push(production[i]);
+                                parseStack.Push(production[i]);
                             }
                         }
                     }
@@ -143,7 +170,7 @@ namespace parser
                     }
                 }
 
-                focus = ParseStack.Peek();
+                focus = parseStack.Peek();
             }
 
         }
@@ -152,17 +179,20 @@ namespace parser
         {
             Productions[0] = new List<string> 
             { 
+                "Goal",
                 "Expr" 
             };
 
             Productions[1] = new List<string> 
             { 
+                "Expr",
                 "Term",
                 "Expr'" 
             };
 
             Productions[2] = new List<string> 
             { 
+                "Expr'",
                 "+",
                 "Term",
                 "Expr'" 
@@ -170,6 +200,7 @@ namespace parser
             
             Productions[3] = new List<string> 
             { 
+                "Expr'",
                 "-",
                 "Term",
                 "Expr'" 
@@ -177,17 +208,20 @@ namespace parser
 
             Productions[4] = new List<string> 
             { 
+                "Expr'",
                 "e" 
             };
 
             Productions[5] = new List<string> 
             { 
+                "Term",
                 "Factor",
                 "Term'" 
             };
 
             Productions[6] = new List<string> 
             { 
+                "Term'",
                 "*",
                 "Factor",
                 "Term'" 
@@ -195,6 +229,7 @@ namespace parser
 
             Productions[7] = new List<string> 
             { 
+                "Term'",
                 "/",
                 "Factor",
                 "Term'"
@@ -202,11 +237,13 @@ namespace parser
 
             Productions[8] = new List<string> 
             { 
+                "Term'",
                 "e" 
             };
 
             Productions[9] = new List<string> 
             { 
+                "Factor",
                 "(",
                 "Expr",
                 ")"
@@ -214,11 +251,13 @@ namespace parser
 
             Productions[10] = new List<string> 
             { 
+                "Factor",
                 "num"
             };
 
             Productions[11] = new List<string> 
             { 
+                "Factor",
                 "name" 
             };
         }
@@ -240,14 +279,15 @@ namespace parser
                 "Expr'"
             };
 
-            // LTerm -> LFactor Expr'
+            // LTerm -> LFactor Term'
             Productions[2] = new List<string>
             {
                 "LTerm",
                 "LFactor",
-                "Expr'"
+                "Term'"
             };
 
+            // RTerm -> RFactor Term'
             Productions[3] = new List<string>
             {
                 "RTerm",
@@ -280,22 +320,22 @@ namespace parser
                 "e" 
             };
 
-            // Term' -> * RTerm Expr'
+            // Term' -> * RTerm Term'
             Productions[7] = new List<string>
             {
                 "Term'",
                 "*",
                 "RTerm",
-                "Expr'"
+                "Term'"
             };
 
-            // Term' -> / RTerm Expr'
+            // Term' -> / RTerm Term'
             Productions[8] = new List<string>
             {
                 "Term'",
                 "/",
                 "RTerm",
-                "Expr'"
+                "Term'"
             };
 
             // Term' -> e
@@ -472,6 +512,7 @@ namespace parser
             BuildFirst();
             BuildFollow();
             BuildFirstPlus();
+            GenerateTable();
         }
 
         private void TakeInput()
@@ -532,7 +573,7 @@ namespace parser
         private void BuildFirst()
         {
             // for each t in (T U eof U e) First(t) <- t
-            foreach (var t in Terminals)
+            foreach (var t in SampleTerminals)
             {
                 First[t] = new List<string>(){ t };
             }
@@ -540,7 +581,7 @@ namespace parser
             First["eof"] = new List<string> { "eof" };
 
             // for each nt in (NT) First(nt) <- empty set
-            foreach (var nt in NonTerminals)
+            foreach (var nt in SampleNonTerminals)
             {
                 First[nt] = new List<string>();
             }
@@ -586,13 +627,7 @@ namespace parser
                         rhs.Add("e");
                     }
 
-                    foreach (var val in rhs)
-                    {
-                        if (!First[b[0]].Contains(val))
-                        {
-                            First[b[0]].Add(val);
-                        }
-                    }
+                    First[b[0]] = First[b[0]].Union(rhs).ToList();
                     
                     if (!isChanging)
                     {
@@ -608,7 +643,7 @@ namespace parser
 
         private void BuildFollow()
         {
-            foreach (var nt in NonTerminals)
+            foreach (var nt in SampleNonTerminals)
             {
                 Follow[nt] = new List<string>();
             }
@@ -629,15 +664,16 @@ namespace parser
 
                     List<string> trailer = Follow[a];
 
-                    for (int i = k; i >= 1; i--)
+                    for (int i = k; i >= 0; i--)
                     {
-                        if (NonTerminals.Contains(b[i]))
+                        if (SampleNonTerminals.Contains(b[i]))
                         {
                             foreach (var val in trailer)
                             {
                                 if (!Follow[b[i]].Contains(val))
                                 {
                                     Follow[b[i]].Add(val);
+                                    if (b[i] == "Expr'") Console.WriteLine("Adding {val} to Expr'");
                                     isChanging = true;
                                 }
                             }
@@ -668,16 +704,128 @@ namespace parser
 
         private void BuildFirstPlus()
         {
-            foreach (var nt in NonTerminals)
+            foreach (var nt in SampleNonTerminals)
             {
-                if (First[nt].Contains("e"))
+                FirstPlus[nt] = new Dictionary<string, List<string>>();
+            }
+
+            foreach (var t in SampleTerminals)
+            {
+                FirstPlus[t] = new Dictionary<string, List<string>>();
+            }
+
+            foreach (var p in Productions)
+            {
+                var a = p.Value[0];
+                var b = p.Value[1];
+
+                if (b == "e")
                 {
-                    FirstPlus[nt] = First[nt];
+                    b = "eof";
+                }
+
+                if (!First[b].Contains("e"))
+                {
+                    FirstPlus[a][b] = First[b];
                 }
                 else
                 {
-                    FirstPlus[nt] = First[nt].Union(Follow[nt]).ToList();
+                    FirstPlus[a][b] = First[b].Union(Follow[b]).ToList();
                 }
+            }
+
+        }
+    
+        private void GenerateTable()
+        {
+            foreach (var nt in SampleNonTerminals)
+            {
+                Table[nt] = new Dictionary<string, int>();
+                foreach (var t in SampleTerminals)
+                {
+                    Table[nt][t] = -1;
+                }
+            }
+
+            for (int i = 0; i < Productions.Count; i++)
+            {
+                var a = Productions[i][0];
+                var b = Productions[i][1];
+                
+                if (b == "e")
+                {
+                    b = "eof";
+                }
+
+                foreach (var val in FirstPlus[a][b])
+                {
+                    if (SampleTerminals.Contains(val))
+                    {
+                        Table[a][val] = i;
+                    }
+                }
+
+                if (FirstPlus[a][b].Contains("eof"))
+                {
+                    Table[a]["eof"] = i;
+                }
+            }
+        }
+    
+        private void PrintTable()
+        {
+            string top = "";
+            foreach (var t in Terminals)
+            {
+                if (t == "spacenegname") top += t;
+                else top += "\t\t" + t;
+            }
+            Console.WriteLine(top);
+
+            foreach (var nt in NonTerminals)
+            {
+                string line = nt;
+
+                if (line != "SpaceNegVal") line += "\t\t";
+                else line += "\t";
+
+                foreach (var t in Terminals)
+                {
+                    if (Table[nt][t] == -1) line += "- \t\t";
+                    else line += Table[nt][t] + "\t\t";
+                }
+
+                Console.WriteLine(line);
+            }
+        }
+
+        private void PrintFirst()
+        {
+            foreach (var val in First)
+            {
+                string line = val.Key + ":";
+                
+                foreach (var thing in val.Value)
+                {
+                    line += "\t" + thing;
+                }
+
+                Console.WriteLine(line);
+            }
+        }
+
+        private void PrintFollow()
+        {
+            foreach (var val in Follow)
+            {
+                string line = val.Key + ":";
+                
+                foreach (var thing in val.Value)
+                {
+                    line += "\t" + thing;
+                }
+
+                Console.WriteLine(line);
             }
         }
     }
