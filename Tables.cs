@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace parser
 {
@@ -469,6 +470,8 @@ namespace parser
         private void FillTable()
         {
             BuildFirst();
+            BuildFollow();
+            BuildFirstPlus();
         }
 
         private void TakeInput()
@@ -601,6 +604,81 @@ namespace parser
                 }
             }
 
+        }
+
+        private void BuildFollow()
+        {
+            foreach (var nt in NonTerminals)
+            {
+                Follow[nt] = new List<string>();
+            }
+
+            Follow[Productions[0][0]].Add("eof");
+
+            bool isChanging = true;
+
+            while (isChanging)
+            {
+                isChanging = false;
+
+                foreach (var prod in Productions)
+                {
+                    List<string> b = prod.Value;
+                    string a = b[0];
+                    int k = b.Count - 1;
+
+                    List<string> trailer = Follow[a];
+
+                    for (int i = k; i >= 1; i--)
+                    {
+                        if (NonTerminals.Contains(b[i]))
+                        {
+                            foreach (var val in trailer)
+                            {
+                                if (!Follow[b[i]].Contains(val))
+                                {
+                                    Follow[b[i]].Add(val);
+                                    isChanging = true;
+                                }
+                            }
+
+                            if (First[b[i]].Contains("e"))
+                            {
+                                foreach (var val in First[b[i]])
+                                {
+                                    if (!trailer.Contains(val) && val != "e")
+                                    {
+                                        trailer.Add(val);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                trailer = First[b[i]];
+                            }
+                        }
+                        else 
+                        {
+                            trailer = First[b[i]];
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BuildFirstPlus()
+        {
+            foreach (var nt in NonTerminals)
+            {
+                if (First[nt].Contains("e"))
+                {
+                    FirstPlus[nt] = First[nt];
+                }
+                else
+                {
+                    FirstPlus[nt] = First[nt].Union(Follow[nt]).ToList();
+                }
+            }
         }
     }
 }
