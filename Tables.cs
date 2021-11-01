@@ -28,25 +28,31 @@ namespace parser
         {
             "num",
             "name",
+            "negnum",
+            "negname",
+            "spacenegnum",
+            "spacenegname",
             "(",
             ")",
             "+",
             "-",
-            "x",
-            "/",
-            "eof",
-            "e"
+            "*",
+            "/"
         };
+
         private static List<string> NonTerminals = new List<string>
         {
             "Goal",
             "Expr",
             "LTerm",
+            "RTerm",
             "Expr'",
-            "Term",
             "Term'",
             "LFactor",
-            "RFactor"
+            "RFactor",
+            "GFactor",
+            "PosVal",
+            "SpaceNegVal"
         };
 
         private static List<char> StoppingChar = new List<char>
@@ -66,20 +72,24 @@ namespace parser
         public TableMaker()
         {
             TakeInput();
-            // FillProduction();
-            FillSampleProduction();
+            FillProduction();
+            // FillSampleProduction();
+            // FillSampleTable();
             FillTable();
 
             ParseIndex = 0;
-
-            if (Parse())
-            {
-                Console.WriteLine("Valid");
-            }
-            else
-            {
-                Console.WriteLine("Invalid");
-            }
+            
+            // while (ParseIndex < Input.Count)
+            // {
+            //     if (Parse())
+            //     {
+            //         Console.WriteLine("Valid");
+            //     }
+            //     else
+            //     {
+            //         Console.WriteLine("Invalid");
+            //     }
+            // }
         }
 
         private bool Parse()
@@ -93,13 +103,6 @@ namespace parser
 
             while (true)
             {
-                if (focus == "e")
-                {
-                    ParseStack.Pop();
-                    focus = ParseStack.Peek();
-                    continue;
-                }
-
                 if (focus == "eof" && word == "eof")    // end of file
                 {
                     return true;
@@ -127,7 +130,10 @@ namespace parser
 
                         for (int i = production.Count - 1; i != -1; i--)
                         {
-                            ParseStack.Push(production[i]);
+                            if (production[i] != "e")
+                            {
+                                ParseStack.Push(production[i]);
+                            }
                         }
                     }
                     else
@@ -241,54 +247,53 @@ namespace parser
                 "Expr'"
             };
 
-            // Expr' -> + Term Expr'
             Productions[3] = new List<string>
             {
-                "Expr'",
-                "+",
-                "Term",
-                "Expr'"                
+                "RTerm",
+                "RFactor",
+                "Term'"
             };
 
-            // Expr' -> - Term Expr'
+            // Expr' -> + RTerm Expr'
             Productions[4] = new List<string>
             {
                 "Expr'",
+                "+",
+                "RTerm",
+                "Expr'"                
+            };
+
+            // Expr' -> - RTerm Expr'
+            Productions[5] = new List<string>
+            {
+                "Expr'",
                 "-",
-                "Term",
+                "RTerm",
                 "Expr'"
             };
 
             // Expr' -> e
-            Productions[5] = new List<string> 
+            Productions[6] = new List<string> 
             { 
                 "Expr'",
                 "e" 
             };
 
-            // Term -> RFactor Term'
-            Productions[6] = new List<string>
-            {
-                "Term",
-                "RFactor",
-                "Term'"
-            };
-
-            // Term' -> * Term Expr'
+            // Term' -> * RTerm Expr'
             Productions[7] = new List<string>
             {
                 "Term'",
                 "*",
-                "Term",
+                "RTerm",
                 "Expr'"
             };
 
-            // Term' -> / Term Expr'
+            // Term' -> / RTerm Expr'
             Productions[8] = new List<string>
             {
                 "Term'",
                 "/",
-                "Term",
+                "RTerm",
                 "Expr'"
             };
 
@@ -299,88 +304,88 @@ namespace parser
                 "e" 
             };
 
-            // LFactor -> (Expr)
+            // LFactor -> GFactor
             Productions[10] = new List<string>
             {
                 "LFactor",
-                "(",
-                "Expr",
-                ")"
+                "GFactor"
             };
 
-            // LFactor -> num
+            // LFactor -> negnum
             Productions[11] = new List<string> 
             { 
                 "LFactor",
-                "num" 
+                "negnum" 
             };
 
-            // LFactor -> - num
+            // LFactor -> negname
             Productions[12] = new List<string>
             {
                 "LFactor",
-                "-",
-                "num"
+                "negname"
             };
 
-            // LFactor -> name
-            Productions[13] = new List<string> 
-            { 
-                "LFactor",
-                "name" 
-            };
-
-            // LFactor -> - name
-            Productions[14] = new List<string>
-            {
-                "LFactor",
-                "-",
-                "name"
-            };
-
-            // RFactor -> (Expr)
-            Productions[15] = new List<string>
+            // RFactor -> GFactor
+            Productions[13] = new List<string>
             {
                 "RFactor",
+                "GFactor"
+            };
+
+            // GFactor -> ( Expr )
+            Productions[14] = new List<string>
+            {
+                "GFactor",
                 "(",
                 "Expr",
                 ")"
             };
 
-            // RFactor -> num
-            Productions[16] = new List<string> 
-            { 
-                "RFactor",
-                "num" 
+            // GFactor -> PosVal
+            Productions[15] = new List<string>
+            {
+                "GFactor",
+                "PosVal"
             };
 
-            // RFactor -> [space] - num
+            // GFactor -> SpaceNegVal
+            Productions[16] = new List<string>
+            {
+                "GFactor",
+                "SpaceNegVal"
+            };
+
+            // PosVal -> num
             Productions[17] = new List<string>
             {
-                "RFactor",
-                " ",
-                "-",
+                "PosVal",
                 "num"
             };
 
-            // RFactor -> name
-            Productions[18] = new List<string> 
-            { 
-                "RFactor",
-                "name" 
-            };
-
-            // RFactor -> [space] - name
-            Productions[19] = new List<string>
+            // PosVal -> name
+            Productions[18] = new List<string>
             {
-                "RFactor",
-                " ",
-                "-",
+                "PosVal",
                 "name"
             };
+
+            // SpaceNegVal -> spacenegnum
+            Productions[19] = new List<string>
+            {
+                "SpaceNegVal",
+                "spacenegnum"
+            };
+
+            // SpaceNegVal -> spacenegname
+            Productions[20] = new List<string>
+            {
+                "SpaceNegVal",
+                "spacenegname"
+            };
+
         }
 
-        private void FillTable()
+        private void FillSampleTable()
         {
             Table["Goal"] = new Dictionary<string, int>()
             {
@@ -461,6 +466,11 @@ namespace parser
             };
         }
 
+        private void FillTable()
+        {
+            BuildFirst();
+        }
+
         private void TakeInput()
         {
             using (StreamReader reader = new StreamReader(FILE_PATH))
@@ -476,15 +486,28 @@ namespace parser
         {
             if (ParseIndex >= Input.Count) return "eof";
 
+            if (Input[ParseIndex] == ' ')
+            {
+                ParseIndex++;
+            }
+            else if (Input[ParseIndex] == '\n' || Input[ParseIndex] == '\r')
+            {
+                ParseIndex++;
+                return "eof";
+            }
+
             StringBuilder builder = new StringBuilder();
 
             do
             {
                 builder.Append(Input[ParseIndex]);
                 ParseIndex++;
+                
+                if (Terminals.Contains(builder.ToString())) break;
+
+                if (ParseIndex >= Input.Count) break;
             }
             while (!StoppingChar.Contains(Input[ParseIndex]));
-            ParseIndex++;
 
             string builtString = builder.ToString();
 
@@ -501,6 +524,83 @@ namespace parser
             {
                 return builtString;
             }
+        }
+
+        private void BuildFirst()
+        {
+            // for each t in (T U eof U e) First(t) <- t
+            foreach (var t in Terminals)
+            {
+                First[t] = new List<string>(){ t };
+            }
+            First["e"] = new List<string> { "e" };
+            First["eof"] = new List<string> { "eof" };
+
+            // for each nt in (NT) First(nt) <- empty set
+            foreach (var nt in NonTerminals)
+            {
+                First[nt] = new List<string>();
+            }
+
+            bool isChanging = true;
+            
+            while (isChanging)
+            {
+                isChanging = false;
+
+                foreach (var prod in Productions)
+                {
+                    List<string> rhs = new List<string>();
+                    List<string> b = prod.Value;
+                    int k = b.Count - 1;
+
+                    int checker = First[b[0]].Count;
+                    
+                    foreach (var firstB in First[b[1]])
+                    {
+                        if (firstB != "e")
+                        {
+                            rhs.Add(firstB);
+                        }
+                    }
+
+                    int i = 1;
+                    while (First[b[i]].Contains("e") && i <= k - 1)
+                    {
+                        // rhs <- rhs U (FIRST(Bi + 1) - "e")
+                        foreach(var firstB1 in First[b[i+1]])
+                        {
+                            if (firstB1 != "e")
+                            {
+                                rhs.Add(firstB1);
+                            }
+                        }
+                        i += 1;
+                    }
+
+                    if (i == k && First[b[k]].Contains("e")) 
+                    {
+                        rhs.Add("e");
+                    }
+
+                    foreach (var val in rhs)
+                    {
+                        if (!First[b[0]].Contains(val))
+                        {
+                            First[b[0]].Add(val);
+                        }
+                    }
+                    
+                    if (!isChanging)
+                    {
+                        if (checker != First[b[0]].Count)
+                        {
+                            isChanging = true;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }
