@@ -99,7 +99,7 @@ namespace parser
             // FillSampleTable();
             FillTable();
             // PrintTable();
-            PrintFirst();
+            // PrintFirst();
             PrintFollow();
 
             ParseIndex = 0;
@@ -641,55 +641,71 @@ namespace parser
 
         private void BuildFollow()
         {
+            // for each A in NT do;
+                // FOLLOW(A) <- 0;
+            // end;
             foreach (var nt in SampleNonTerminals)
             {
                 Follow[nt] = new List<string>();
             }
 
+            // FOLLOW(S) <- {eof};
             Follow[Productions[0][0]].Add("eof");
 
+            // while (FOLLOW sets are still changing) do;
             bool isChanging = true;
-
             while (isChanging)
             {
                 isChanging = false;
 
+                // for each p in P of the form A->B1B2...Bk do;
                 foreach (var prod in Productions)
                 {
                     List<string> b = prod.Value;
                     string a = b[0];
                     int k = b.Count - 1;
 
+                    // TRAILER <- FOLLOW(A)
                     List<string> trailer = Follow[a].ToList();
-
-                    for (int i = k; i >= 0; i--)
+                    
+                    // for i <- k down to 1 do;
+                    for (int i = k; i >= 1; i--)
                     {
+                        // if Bi in NT then begin;
                         if (SampleNonTerminals.Contains(b[i]))
                         {
-                            foreach (var val in trailer)
+                            List<string> checker = Follow[b[i]].ToList();
+                            
+                            // FOLLOW(Bi) <- FOLLOW(Bi) U TRAILER
+                            Follow[b[i]] = Follow[b[i]].Union(trailer).ToList();
+
+                            if (checker.Count != Follow[b[i]].Count)
                             {
-                                if (!Follow[b[i]].Contains(val))
-                                {
-                                    Follow[b[i]].Add(val);
-                                    isChanging = true;
-                                }
+                                isChanging = true;
                             }
 
+                            // if e in FIRST(Bi)
                             if (First[b[i]].Contains("e"))
                             {
+                                // then TRAILER <- TRAILER U (FIRST(Bi) - e)
+                                List<string> rhs = new List<string>();
                                 foreach (var val in First[b[i]])
                                 {
-                                    if (!trailer.Contains(val) && val != "e")
+                                    if (val != "e")
                                     {
-                                        trailer.Add(val);
+                                        rhs.Add(val);
                                     }
                                 }
+
+                                    trailer = trailer.Union(rhs).ToList();
                             }
+                            // else TRAILOR <- FIRST(Bi)
                             else
                             {
                                 trailer = First[b[i]];
                             }
                         }
+                        // else TRAILER <- FIRST(Bi)
                         else 
                         {
                             trailer = First[b[i]];
