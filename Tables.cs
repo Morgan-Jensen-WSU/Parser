@@ -94,13 +94,13 @@ namespace parser
         public TableMaker()
         {
             TakeInput();
-            // FillProduction();
-            FillSampleProduction();
+            FillProduction();
+            // FillSampleProduction();
             // FillSampleTable();
             FillTable();
             // PrintTable();
             // PrintFirst();
-            PrintFollow();
+            // PrintFollow();
 
             ParseIndex = 0;
             
@@ -571,7 +571,7 @@ namespace parser
         private void BuildFirst()
         {
             // for each t in (T U eof U e) First(t) <- t
-            foreach (var t in SampleTerminals)
+            foreach (var t in Terminals)
             {
                 First[t] = new List<string>(){ t };
             }
@@ -579,7 +579,7 @@ namespace parser
             First["eof"] = new List<string> { "eof" };
 
             // for each nt in (NT) First(nt) <- empty set
-            foreach (var nt in SampleNonTerminals)
+            foreach (var nt in NonTerminals)
             {
                 First[nt] = new List<string>();
             }
@@ -644,7 +644,7 @@ namespace parser
             // for each A in NT do;
                 // FOLLOW(A) <- 0;
             // end;
-            foreach (var nt in SampleNonTerminals)
+            foreach (var nt in NonTerminals)
             {
                 Follow[nt] = new List<string>();
             }
@@ -672,7 +672,7 @@ namespace parser
                     for (int i = k; i >= 1; i--)
                     {
                         // if Bi in NT then begin;
-                        if (SampleNonTerminals.Contains(b[i]))
+                        if (NonTerminals.Contains(b[i]))
                         {
                             List<string> checker = Follow[b[i]].ToList();
                             
@@ -717,12 +717,12 @@ namespace parser
 
         private void BuildFirstPlus()
         {
-            foreach (var nt in SampleNonTerminals)
+            foreach (var nt in NonTerminals)
             {
                 FirstPlus[nt] = new Dictionary<string, List<string>>();
             }
 
-            foreach (var t in SampleTerminals)
+            foreach (var t in Terminals)
             {
                 FirstPlus[t] = new Dictionary<string, List<string>>();
             }
@@ -751,10 +751,10 @@ namespace parser
     
         private void GenerateTable()
         {
-            foreach (var nt in SampleNonTerminals)
+            foreach (var nt in NonTerminals)
             {
                 Table[nt] = new Dictionary<string, int>();
-                foreach (var t in SampleTerminals)
+                foreach (var t in Terminals)
                 {
                     Table[nt][t] = -1;
                 }
@@ -772,7 +772,7 @@ namespace parser
 
                 foreach (var val in FirstPlus[a][b])
                 {
-                    if (SampleTerminals.Contains(val))
+                    if (Terminals.Contains(val))
                     {
                         Table[a][val] = i;
                     }
