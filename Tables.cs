@@ -14,8 +14,6 @@ namespace parser
         private static int ParseIndex { get; set; }
 
         private List<char> Input = new List<char>();
-
-
         private static Dictionary<int, List<string>> Productions = new Dictionary<int, List<string>>();
         private static Dictionary<string, List<string>> First = new Dictionary<string, List<string>>();
         private static Dictionary<string, List<string>> Follow = new Dictionary<string, List<string>>();
@@ -662,7 +660,7 @@ namespace parser
                     string a = b[0];
                     int k = b.Count - 1;
 
-                    List<string> trailer = Follow[a];
+                    List<string> trailer = Follow[a].ToList();
 
                     for (int i = k; i >= 0; i--)
                     {
@@ -673,7 +671,6 @@ namespace parser
                                 if (!Follow[b[i]].Contains(val))
                                 {
                                     Follow[b[i]].Add(val);
-                                    if (b[i] == "Expr'") Console.WriteLine("Adding {val} to Expr'");
                                     isChanging = true;
                                 }
                             }
