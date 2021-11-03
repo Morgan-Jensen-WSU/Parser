@@ -9,7 +9,7 @@ namespace parser
     class TableMaker
     {
 
-        private const string FILE_PATH = "input/invalid_simple.txt";
+        private const string FILE_PATH = "input/valid.txt";
 
         private static int ParseIndex { get; set; }
         private static string PrevWord { get; set; }
