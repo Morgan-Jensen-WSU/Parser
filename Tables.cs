@@ -9,7 +9,7 @@ namespace parser
     class TableMaker
     {
 
-        private const string FILE_PATH = "input/valid_simple.txt";
+        private const string FILE_PATH = "input/invalid_simple.txt";
 
         private static int ParseIndex { get; set; }
         private static string PrevWord { get; set; }
@@ -36,8 +36,9 @@ namespace parser
             "+",
             "-",
             "*",
+            "^",
             "/",
-            "e",
+            "@",
             "eof"
         };
 
@@ -86,6 +87,7 @@ namespace parser
             '-',
             '=',
             '*',
+            '^',
             '/',
             '(',
             ')',
@@ -107,14 +109,22 @@ namespace parser
             ParseIndex = 0;
             
             while (ParseIndex < Input.Count)
-            {
+            { 
+                if (Input[ParseIndex] == '\n')
+                {
+                    ParseIndex++;
+                    continue;
+                }
+
                 if (Parse())
                 {
                     Console.WriteLine("Valid");
+                    PrevWord = null;
                 }
                 else
                 {
                     Console.WriteLine("Invalid");
+                    PrevWord = null;
                 }
             }
         }
@@ -158,7 +168,7 @@ namespace parser
 
                         for (int i = production.Count - 1; i != 0; i--)
                         {
-                            if (production[i] != "e")
+                            if (production[i] != "@")
                             {
                                 parseStack.Push(production[i]);
                             }
@@ -209,7 +219,7 @@ namespace parser
             Productions[4] = new List<string> 
             { 
                 "Expr'",
-                "e" 
+                "@" 
             };
 
             Productions[5] = new List<string> 
@@ -238,7 +248,7 @@ namespace parser
             Productions[8] = new List<string> 
             { 
                 "Term'",
-                "e" 
+                "@" 
             };
 
             Productions[9] = new List<string> 
@@ -317,7 +327,7 @@ namespace parser
             Productions[6] = new List<string> 
             { 
                 "Expr'",
-                "e" 
+                "@" 
             };
 
             // Term' -> * RTerm Term'
@@ -342,7 +352,7 @@ namespace parser
             Productions[9] = new List<string> 
             { 
                 "Term'",
-                "e" 
+                "@" 
             };
 
             // LFactor -> GFactor
@@ -422,6 +432,15 @@ namespace parser
             {
                 "SpaceNegVal",
                 "spacenegname"
+            };
+
+            // Term' -> ^ RTerm Term'
+            Productions[21] = new List<string>
+            {
+                "Term'",
+                "^",
+                "RFactor",
+                "Term'"
             };
 
         }
@@ -544,6 +563,10 @@ namespace parser
 
             do
             {
+                while (Input[ParseIndex] == ' ')
+                {
+                    ParseIndex++;
+                }
                 builder.Append(Input[ParseIndex]);
                 ParseIndex++;
                 
@@ -553,23 +576,55 @@ namespace parser
             }
             while (!StoppingChar.Contains(Input[ParseIndex]));
 
-            string builtString = builder.ToString();
+            if (builder.ToString() == "-" && 
+            !(PrevWord == "name" || PrevWord == "num" || PrevWord == ")" 
+            || PrevWord == "spacenegname" || PrevWord == "spacenegnum"))
+            {
+                do
+                {
+                    while (Input[ParseIndex] == ' ')
+                    {
+                        ParseIndex++;
+                    }
+                    builder.Append(Input[ParseIndex]);
+                    ParseIndex++;
 
-            Console.WriteLine(builder.ToString());
+                    if (ParseIndex >= Input.Count) break;
+                } 
+                while (!StoppingChar.Contains(Input[ParseIndex])); 
+            }
+
+            string builtString = builder.ToString();
 
             int temp = 0;
             if (Int32.TryParse(builtString, out temp))
             {
-                return "num";
+                if (temp < 0) // neg number
+                {
+                    PrevWord = "spacenegnum";
+                }
+                else
+                {
+                    PrevWord = "num";
+                }
             }
             else if (!Terminals.Contains(builtString))
             {
-                return "name";
+                if (builtString.StartsWith("-")) // neg var
+                {
+                    PrevWord = "spacenegname";
+                }
+                else
+                {
+                    PrevWord = "name";
+                }
             }
             else
             {
-                return builtString;
+                PrevWord = builtString;
             }
+
+            return PrevWord;
         }
 
         private void BuildFirst()
@@ -579,7 +634,7 @@ namespace parser
             {
                 First[t] = new List<string>(){ t };
             }
-            First["e"] = new List<string> { "e" };
+            First["@"] = new List<string> { "@" };
             First["eof"] = new List<string> { "eof" };
 
             // for each nt in (NT) First(nt) <- empty set
@@ -604,19 +659,19 @@ namespace parser
                     
                     foreach (var firstB in First[b[1]])
                     {
-                        if (firstB != "e")
+                        if (firstB != "@")
                         {
                             rhs.Add(firstB);
                         }
                     }
 
                     int i = 1;
-                    while (First[b[i]].Contains("e") && i <= k - 1)
+                    while (First[b[i]].Contains("@") && i <= k - 1)
                     {
-                        // rhs <- rhs U (FIRST(Bi + 1) - "e")
+                        // rhs <- rhs U (FIRST(Bi + 1) - "@")
                         foreach(var firstB1 in First[b[i+1]])
                         {
-                            if (firstB1 != "e")
+                            if (firstB1 != "@")
                             {
                                 rhs.Add(firstB1);
                             }
@@ -624,9 +679,9 @@ namespace parser
                         i += 1;
                     }
 
-                    if (i == k && First[b[k]].Contains("e")) 
+                    if (i == k && First[b[k]].Contains("@")) 
                     {
-                        rhs.Add("e");
+                        rhs.Add("@");
                     }
 
                     First[b[0]] = First[b[0]].Union(rhs).ToList();
@@ -689,13 +744,13 @@ namespace parser
                             }
 
                             // if e in FIRST(Bi)
-                            if (First[b[i]].Contains("e"))
+                            if (First[b[i]].Contains("@"))
                             {
                                 // then TRAILER <- TRAILER U (FIRST(Bi) - e)
                                 List<string> rhs = new List<string>();
                                 foreach (var val in First[b[i]])
                                 {
-                                    if (val != "e")
+                                    if (val != "@")
                                     {
                                         rhs.Add(val);
                                     }
@@ -736,7 +791,7 @@ namespace parser
                 var a = p.Value[0];
                 var b = p.Value[1];
 
-                if (!First[b].Contains("e"))
+                if (!First[b].Contains("@"))
                 {
                     FirstPlus[a][b] = First[b];
                 }
