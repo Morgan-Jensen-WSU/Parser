@@ -12,6 +12,7 @@ namespace parser
         private const string FILE_PATH = "input/valid_simple.txt";
 
         private static int ParseIndex { get; set; }
+        private static string PrevWord { get; set; }
 
         private List<char> Input = new List<char>();
         private static Dictionary<int, List<string>> Productions = new Dictionary<int, List<string>>();
@@ -36,6 +37,7 @@ namespace parser
             "-",
             "*",
             "/",
+            "e",
             "eof"
         };
 
@@ -323,7 +325,7 @@ namespace parser
             {
                 "Term'",
                 "*",
-                "RTerm",
+                "RFactor",
                 "Term'"
             };
 
@@ -332,7 +334,7 @@ namespace parser
             {
                 "Term'",
                 "/",
-                "RTerm",
+                "RFactor",
                 "Term'"
             };
 
@@ -553,6 +555,8 @@ namespace parser
 
             string builtString = builder.ToString();
 
+            Console.WriteLine(builder.ToString());
+
             int temp = 0;
             if (Int32.TryParse(builtString, out temp))
             {
@@ -732,18 +736,13 @@ namespace parser
                 var a = p.Value[0];
                 var b = p.Value[1];
 
-                if (b == "e")
-                {
-                    b = "eof";
-                }
-
                 if (!First[b].Contains("e"))
                 {
                     FirstPlus[a][b] = First[b];
                 }
                 else
                 {
-                    FirstPlus[a][b] = First[b].Union(Follow[b]).ToList();
+                    FirstPlus[a][b] = First[b].Union(Follow[a]).ToList();
                 }
             }
 
@@ -764,11 +763,6 @@ namespace parser
             {
                 var a = Productions[i][0];
                 var b = Productions[i][1];
-                
-                if (b == "e")
-                {
-                    b = "eof";
-                }
 
                 foreach (var val in FirstPlus[a][b])
                 {
