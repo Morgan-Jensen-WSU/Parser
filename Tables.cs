@@ -159,7 +159,6 @@ namespace parser
                 }
                 else    // focus is nonterminal
                 {
-
                     if (Table[focus][word] != -1)
                     {
                         parseStack.Pop();
