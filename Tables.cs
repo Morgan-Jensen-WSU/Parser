@@ -9,7 +9,8 @@ namespace parser
     class TableMaker
     {
 
-        private const string FILE_PATH = "input/valid.txt";
+        private const string FILE_PATH = "input/test.txt";
+        private const string DEBUG_OUTPUT_PATH = "output/debug.txt";
 
         private static int ParseIndex { get; set; }
         private static string PrevWord { get; set; }
@@ -26,58 +27,57 @@ namespace parser
         private static List<string> Terminals = new List<string>
         {
             "num",
+            "ish",
             "name",
             "negnum",
             "negname",
             "spacenegnum",
             "spacenegname",
+            "procedure",
+            "result",
+            ",",
             "(",
             ")",
+            "{",
+            "}",
             "+",
             "-",
             "*",
             "^",
             "/",
+            "=",
             "@",
-            "eof"
-        };
-
-        private static List<string> SampleTerminals = new List<string>
-        {
-            "num",
-            "name",
-            "(",
-            ")",
-            "+",
-            "-",
-            "*",
-            "/",
             "eof"
         };
 
         private static List<string> NonTerminals = new List<string>
         {
             "Goal",
+            "LineFull",
+            "VarTypeAfter",
+            "LineVarName",
+            "LineVarNameRemaining",
+            "ProcedureParams",
+            "Params",
+            "MoreParams",
+            "VarType",
             "Expr",
-            "LTerm",
-            "RTerm",
-            "Expr'",
-            "Term'",
-            "LFactor",
-            "RFactor",
-            "GFactor",
+            "LTermAddSub",
+            "LTermMultDiv",
+            "RTermAddSub",
+            "RTermMultDiv",
+            "AddSub'",
+            "MultDiv'",
+            "MultAndRightOp",
+            "DivAndRightOp",
+            "Power'",
+            "PowerAndRightOp",
+            "LTermPower",
+            "RTermPower",
+            "GTerm",
+            "Parens",
             "PosVal",
             "SpaceNegVal"
-        };
-
-        private static List<string> SampleNonTerminals = new List<string>
-        {
-            "Goal",
-            "Expr",
-            "Expr'",
-            "Term",
-            "Term'",
-            "Factor"
         };
 
         private static List<char> StoppingChar = new List<char>
@@ -91,6 +91,9 @@ namespace parser
             '/',
             '(',
             ')',
+            ',',
+            '{',
+            '}',
             '\n',
             '\r'
         };
@@ -99,12 +102,10 @@ namespace parser
         {
             TakeInput();
             FillProduction();
-            // FillSampleProduction();
-            // FillSampleTable();
             FillTable();
-            // PrintTable();
-            // PrintFirst();
-            // PrintFollow();
+            PrintTable();
+            PrintFirst();
+            PrintFollow();
 
             ParseIndex = 0;
             
@@ -184,347 +185,399 @@ namespace parser
 
         }
 
-        private void FillSampleProduction()
+        private void FillProduction()
         {
-            Productions[0] = new List<string> 
-            { 
+            // Goal -> LineFull
+            Productions[0] = new List<string>
+            {
                 "Goal",
-                "Expr" 
+                "LineFull"
             };
 
-            Productions[1] = new List<string> 
-            { 
-                "Expr",
-                "Term",
-                "Expr'" 
+            // LineFull -> VarType VarTypeAfter
+            Productions[1] = new List<string>
+            {
+                "LineFull",
+                "VarType",
+                "VarTypeAfter"
             };
 
-            Productions[2] = new List<string> 
-            { 
-                "Expr'",
-                "+",
-                "Term",
-                "Expr'" 
-            };
-            
-            Productions[3] = new List<string> 
-            { 
-                "Expr'",
-                "-",
-                "Term",
-                "Expr'" 
+            // LineFull -> LineVarName
+            Productions[2] = new List<string>
+            {
+                "LineFull",
+                "LineVarName"
             };
 
-            Productions[4] = new List<string> 
-            { 
-                "Expr'",
-                "@" 
+            // LineFull -> negnum Power' MultDiv' AddSub'
+            Productions[3] = new List<string>
+            {
+                "LineFull",
+                "negnum",
+                "Power'",
+                "MultDiv'",
+                "AddSub'"
             };
 
-            Productions[5] = new List<string> 
-            { 
-                "Term",
-                "Factor",
-                "Term'" 
+            // LineFull -> Parens Power' MultDiv' AddSub'
+            Productions[4] = new List<string>
+            {
+                "LineFull",
+                "Parens",
+                "Power'",
+                "MultDiv'",
+                "AddSub'"
             };
 
-            Productions[6] = new List<string> 
-            { 
-                "Term'",
-                "*",
-                "Factor",
-                "Term'" 
+            // LineFull -> result GTerm
+            Productions[5] = new List<string>
+            {
+                "LineFull",
+                "result",
+                "GTerm"
             };
 
-            Productions[7] = new List<string> 
-            { 
-                "Term'",
-                "/",
-                "Factor",
-                "Term'"
+            // LineFull -> }
+            Productions[6] = new List<string>
+            {
+                "LineFull",
+                "}"
             };
 
-            Productions[8] = new List<string> 
-            { 
-                "Term'",
-                "@" 
+            // VarTypeAfter -> LineVarName
+            Productions[7] = new List<string>
+            {
+                "VarTypeAfter",
+                "LineVarName"
             };
 
-            Productions[9] = new List<string> 
-            { 
-                "Factor",
+            // VarTypeAfter -> procedure name ProcedureParams {
+            Productions[8] = new List<string>
+            {
+                "VarTypeAfter",
+                "procedure",
+                "name",
+                "ProcedureParams",
+                "{"
+            };
+
+            // LineVarName -> name LineVarNameRemaining
+            Productions[9] = new List<string>
+            {
+                "LineVarName",
+                "name",
+                "LineVarNameRemaining"
+            };
+
+            // LineVarNameRemaining -> = Expr
+            Productions[10] = new List<string>
+            {
+                "LineVarNameRemaining",
+                "=",
+                "Expr"
+            };
+
+            // LineVarNameRemaining -> PowerAndRightOp MultDiv' AddSub'
+            Productions[11] = new List<string>
+            {
+                "LineVarNameRemaining",
+                "PowerAndRightOp",
+                "MultDiv'",
+                "AddSub'"
+            };
+
+            // LineVarNameRemaining -> MultAndRightOp AddSub'
+            Productions[12] = new List<string>
+            {
+                "LineVarNameRemaining",
+                "MultAndRightOp",
+                "AddSub'"
+            };
+
+            // LineVarNameRemaining -> DivAndRightOp AddSub'
+            Productions[13] = new List<string>
+            {
+                "LineVarNameRemaining",
+                "DivAndRightOp",
+                "AddSub'"
+            };
+
+            // LineVarNameRemaining -> AddSub'
+            Productions[14] = new List<string>
+            {
+                "LineVarNameRemaining",
+                "AddSub'"
+            };
+
+            // ProcedureParams -> ( Params ) 
+            Productions[15] = new List<string>
+            {
+                "ProcedureParams",
                 "(",
-                "Expr",
+                "Params",
                 ")"
             };
 
-            Productions[10] = new List<string> 
-            { 
-                "Factor",
+            // Params -> VarType name MoreParams
+            Productions[16] = new List<string>
+            {
+                "Params",
+                "VarType",
+                "name",
+                "MoreParams"
+            };
+
+            // Params -> empty
+            Productions[17] = new List<string>
+            {
+                "Params",
+                "@"
+            };
+
+            // MoreParams -> , VarType name MoreParams
+            Productions[18] = new List<string>
+            {
+                "MoreParams",
+                ",",
+                "VarType",
+                "name",
+                "MoreParams"
+            };
+
+            // MoreParams -> empty
+            Productions[19] = new List<string>
+            {
+                "MoreParams",
+                "@"
+            };
+
+            // VarType -> num
+            Productions[20] = new List<string>
+            {
+                "VarType",
                 "num"
             };
 
-            Productions[11] = new List<string> 
-            { 
-                "Factor",
-                "name" 
+            // VarType -> ish
+            Productions[21] = new List<string>
+            {
+                "VarType",
+                "ish"
             };
-        }
-
-        private void FillProduction()
-        {
-            // Goal -> Expr
-            Productions[0] = new List<string> 
-            { 
-                "Goal",
-                "Expr" 
-            };
-
-            // Expr -> LTerm Expr'
-            Productions[1] = new List<string>
+            
+            // Expr -> LTermAddSub AddSub'
+            Productions[22] = new List<string>
             {
                 "Expr",
-                "LTerm",
-                "Expr'"
+                "LTermAddSub",
+                "AddSub'"
             };
 
-            // LTerm -> LFactor Term'
-            Productions[2] = new List<string>
+            // LTermAddSub -> LTermMultDiv MultDiv'
+            Productions[23] = new List<string>
             {
-                "LTerm",
-                "LFactor",
-                "Term'"
+                "LTermAddSub",
+                "LTermMultDiv",
+                "MultDiv'"
             };
 
-            // RTerm -> RFactor Term'
-            Productions[3] = new List<string>
+            // LTerMultDiv -> LTermPower Power'
+            Productions[24] = new List<string>
             {
-                "RTerm",
-                "RFactor",
-                "Term'"
+                "LTermMultDiv",
+                "LTermPower",
+                "Power'"
             };
 
-            // Expr' -> + RTerm Expr'
-            Productions[4] = new List<string>
+            // RTermAddSub -> RTermMultDiv MultDiv'
+            Productions[25] = new List<string>
             {
-                "Expr'",
+                "RTermAddSub",
+                "RTermMultDiv",
+                "MultDiv'"
+            };
+
+            // RTermMultDiv -> RTermPower Power'
+            Productions[26] = new List<string>
+            {
+                "RTermMultDiv",
+                "RTermPower",
+                "Power'"
+            };
+
+            // AddSub' -> + RTermAddSub AddSub'
+            Productions[27] = new List<string>
+            {
+                "AddSub'",
                 "+",
-                "RTerm",
-                "Expr'"                
+                "RTermAddSub",
+                "AddSub'"
             };
 
-            // Expr' -> - RTerm Expr'
-            Productions[5] = new List<string>
+            // AddSub' -> - RTermAddSub AddSub'
+            Productions[28] = new List<string>
             {
-                "Expr'",
+                "AddSub'",
                 "-",
-                "RTerm",
-                "Expr'"
+                "RTermAddSub",
+                "AddSub'"
             };
 
-            // Expr' -> e
-            Productions[6] = new List<string> 
-            { 
-                "Expr'",
-                "@" 
-            };
-
-            // Term' -> * RTerm Term'
-            Productions[7] = new List<string>
+            // AddSub' -> empty
+            Productions[29] = new List<string>
             {
-                "Term'",
+                "AddSub'",
+                "@"
+            };
+
+            // MultDiv' -> MultAndRightOp
+            Productions[30] = new List<string>
+            {
+                "MultDiv'",
+                "MultAndRightOp"
+            };
+
+            // MultDiv' -> DivAndRightOp
+            Productions[31] = new List<string>
+            {
+                "MultDiv'",
+                "DivAndRightOp"
+            };
+
+            // MultDiv' -> empty
+            Productions[32] = new List<string>
+            {
+                "MultDiv'",
+                "@"
+            };
+
+            // MultAndRightOp -> * RTermMultDiv MultDiv'
+            Productions[33] = new List<string>
+            {
+                "MultAndRightOp",
                 "*",
-                "RFactor",
-                "Term'"
+                "RTermMultDiv",
+                "MultDiv'"
             };
 
-            // Term' -> / RTerm Term'
-            Productions[8] = new List<string>
+            // DivAndRightOp -> / RTermMultDiv MultDiv'
+            Productions[34] = new List<string>
             {
-                "Term'",
+                "DivAndRightOp",
                 "/",
-                "RFactor",
-                "Term'"
+                "RTermMultDiv",
+                "MultDiv'"
             };
 
-            // Term' -> e
-            Productions[9] = new List<string> 
-            { 
-                "Term'",
-                "@" 
-            };
-
-            // LFactor -> GFactor
-            Productions[10] = new List<string>
+            // Power' -> PowerAndRightOp
+            Productions[35] = new List<string>
             {
-                "LFactor",
-                "GFactor"
+                "Power'",
+                "PowerAndRightOp"
             };
 
-            // LFactor -> negnum
-            Productions[11] = new List<string> 
-            { 
-                "LFactor",
-                "negnum" 
-            };
-
-            // LFactor -> negname
-            Productions[12] = new List<string>
+            // Power' -> empty
+            Productions[36] = new List<string>
             {
-                "LFactor",
+                "Power'",
+                "@"
+            };
+
+            // PowerAndRightOp -> ^ RTermPower Power'
+            Productions[37] = new List<string>
+            {
+                "PowerAndRightOp",
+                "^",
+                "RTermPower",
+                "Power'"
+            };
+
+            //  LTermPower -> GTerm
+            Productions[38] = new List<string>
+            {
+                "LTermPower",
+                "GTerm"
+            };
+
+            //  LTermPower -> negnum
+            Productions[39] = new List<string>
+            {
+                "LTermPower",
+                "negnum"
+            };
+
+            //  LTermPower -> negname
+            Productions[40] = new List<string>
+            {
+                "LTermPower",
                 "negname"
             };
 
-            // RFactor -> GFactor
-            Productions[13] = new List<string>
+            //  RTermPower -> GTerm
+            Productions[41] = new List<string>
             {
-                "RFactor",
-                "GFactor"
+                "RTermPower",
+                "GTerm"
             };
 
-            // GFactor -> ( Expr )
-            Productions[14] = new List<string>
+            //  GTerm -> Parens
+            Productions[42] = new List<string>
             {
-                "GFactor",
+                "GTerm",
+                "Parens"
+            };
+
+            //  GTerm -> PosVal
+            Productions[43] = new List<string>
+            {
+                "GTerm",
+                "PosVal"
+            };
+
+            //  GTerm -> SpaceNegVal
+            Productions[44] = new List<string>
+            {
+                "GTerm",
+                "SpaceNegVal"
+            };
+
+            //  Parens -> ( Expr )
+            Productions[45] = new List<string>
+            {
+                "Parens",
                 "(",
                 "Expr",
                 ")"
             };
 
-            // GFactor -> PosVal
-            Productions[15] = new List<string>
-            {
-                "GFactor",
-                "PosVal"
-            };
-
-            // GFactor -> SpaceNegVal
-            Productions[16] = new List<string>
-            {
-                "GFactor",
-                "SpaceNegVal"
-            };
-
-            // PosVal -> num
-            Productions[17] = new List<string>
+            //  PosVal -> num
+            Productions[46] = new List<string>
             {
                 "PosVal",
                 "num"
             };
 
-            // PosVal -> name
-            Productions[18] = new List<string>
+            //  PosVal -> name
+            Productions[47] = new List<string>
             {
                 "PosVal",
                 "name"
             };
 
-            // SpaceNegVal -> spacenegnum
-            Productions[19] = new List<string>
+            //  SpaceNegVal -> spacenegnum
+            Productions[48] = new List<string>
             {
                 "SpaceNegVal",
                 "spacenegnum"
             };
 
-            // SpaceNegVal -> spacenegname
-            Productions[20] = new List<string>
+            //  SpaceNegVal -> spacenegname
+            Productions[49] = new List<string>
             {
                 "SpaceNegVal",
                 "spacenegname"
             };
-
-            // Term' -> ^ RTerm Term'
-            Productions[21] = new List<string>
-            {
-                "Term'",
-                "^",
-                "RFactor",
-                "Term'"
-            };
-
         }
-
-        private void FillSampleTable()
-        {
-            Table["Goal"] = new Dictionary<string, int>()
-            {
-                { "eof",   -1 },
-                { "+",     -1 },
-                { "-",     -1 },
-                { "*",     -1 },
-                { "/",     -1 },
-                { "(",      0 },
-                { ")",     -1 },
-                { "name",   0 },
-                { "num",    0 }
-            };
-
-            Table["Expr"] = new Dictionary<string, int>()
-            {
-                { "eof",   -1 },
-                { "+",     -1 },
-                { "-",     -1 },
-                { "*",     -1 },
-                { "/",     -1 },
-                { "(",      1 },
-                { ")",     -1 },
-                { "name",   1 },
-                { "num",    1 }
-            };
-
-            Table["Expr'"] = new Dictionary<string, int>()
-            {
-                { "eof",    4 },
-                { "+",      2 },
-                { "-",      3 },
-                { "*",     -1 },
-                { "/",     -1 },
-                { "(",     -1 },
-                { ")",      4 },
-                { "name",  -1 },
-                { "num",   -1 }
-            };
-
-            Table["Term"] = new Dictionary<string, int>()
-            {
-                { "eof",    -1 },
-                { "+",      -1 },
-                { "-",      -1 },
-                { "*",      -1 },
-                { "/",      -1 },
-                { "(",       5 },
-                { ")",      -1 },
-                { "name",    5 },
-                { "num",     5 }
-            };
-
-            Table["Term'"] = new Dictionary<string, int>()
-            {
-                { "eof",     8 },
-                { "+",       8 },
-                { "-",       8 },
-                { "*",       6 },
-                { "/",       7 },
-                { "(",      -1 },
-                { ")",       8 },
-                { "name",   -1 },
-                { "num",    -1 }
-            };
-
-            Table["Factor"] = new Dictionary<string, int>()
-            {
-                { "eof",    -1 },
-                { "+",      -1 },
-                { "-",      -1 },
-                { "*",      -1 },
-                { "/",      -1 },
-                { "(",       9 },
-                { ")",      -1 },
-                { "name",   11 },
-                { "num",    10 }
-            };
-        }
-
         private void FillTable()
         {
             BuildFirst();
@@ -835,58 +888,78 @@ namespace parser
     
         private void PrintTable()
         {
+            if (File.Exists(DEBUG_OUTPUT_PATH)) File.Delete(DEBUG_OUTPUT_PATH);
+
+            using StreamWriter file = new(DEBUG_OUTPUT_PATH, append: true);
+                        
+            file.WriteLine("****************************************************************");
+            file.WriteLine("Table");
+            file.WriteLine("****************************************************************");
             string top = "";
             foreach (var t in Terminals)
             {
-                if (t == "spacenegname") top += t;
-                else top += "\t\t" + t;
+                if (t == "num") 
+                {
+                    top += "".PadRight(25);
+                    top += t.PadRight(15);
+                }
+                else top += t.PadRight(15);
             }
-            Console.WriteLine(top);
+            file.WriteLine(top);
 
             foreach (var nt in NonTerminals)
             {
-                string line = nt;
-
-                if (line != "SpaceNegVal") line += "\t\t";
-                else line += "\t";
+                string line = nt.PadRight(25);
 
                 foreach (var t in Terminals)
                 {
-                    if (Table[nt][t] == -1) line += "- \t\t";
-                    else line += Table[nt][t] + "\t\t";
+                    if (Table[nt][t] == -1) line += "-".PadRight(15);
+                    else line += Table[nt][t].ToString().PadRight(15);
                 }
 
-                Console.WriteLine(line);
+                file.WriteLine(line);
             }
         }
 
         private void PrintFirst()
         {
+            using StreamWriter file = new(DEBUG_OUTPUT_PATH, append:true); 
+            file.WriteLine();
+
+            file.WriteLine("****************************************************************");
+            file.WriteLine("First");
+            file.WriteLine("****************************************************************");
             foreach (var val in First)
             {
-                string line = val.Key + ":";
+                string line = (val.Key + ":").PadRight(25);
                 
                 foreach (var thing in val.Value)
                 {
-                    line += "\t" + thing;
+                    line += thing.PadRight(15);
                 }
 
-                Console.WriteLine(line);
+                file.WriteLine(line);
             }
         }
 
         private void PrintFollow()
         {
+            using StreamWriter file = new(DEBUG_OUTPUT_PATH, append:true); 
+            file.WriteLine();
+            
+            file.WriteLine("****************************************************************");
+            file.WriteLine("Follow");
+            file.WriteLine("****************************************************************");
             foreach (var val in Follow)
             {
-                string line = val.Key + ":";
+                string line = (val.Key + ":").PadRight(25);
                 
                 foreach (var thing in val.Value)
                 {
-                    line += "\t" + thing;
+                    line += thing.PadRight(15);
                 }
 
-                Console.WriteLine(line);
+                file.WriteLine(line);
             }
         }
     }
