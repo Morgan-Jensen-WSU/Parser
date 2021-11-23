@@ -8,8 +8,9 @@ Start symbol: <PROGRAM>
 Semantics: With the exception of <NEGATIVE NUMBER>, white space, tabs, carriage returns and such are meaningless to this grammer.  Although in practice statements will generally be written on different lines, your scanner shouldn't care.
 
 Special note: "e" stands for the empty string.
-Language Definition
-
+```
+## Language Definition
+```
 <PROGRAM> ::= PROGRAM <VARIABLE NAME>; BEGIN <STATEMENT> END.
 
 <STATEMENT> ::= <READ STATEMENT><STATEMENT> | <WRITE STATEMENT><STATEMENT> | <FOR STATEMENT><STATEMENT> | <IF STATEMENT><STATEMENT> | <CASE STATEMENT><STATEMENT> | <NUM ASSIGNMENT STATEMENT><STATEMENT> | <STRING ASSIGNMENT STATEMENT><STATEMENT> | <ARRAY STATEMENT><STATEMENT> | <PROCEDURE DECLARATION STATEMENT><STATEMENT> | <PROCEDURE CALL STATEMENT><STATEMENT> | <RETURN STATEMENT><STATEMENT> | <NUM DECLARATION STATEMENT><STATEMENT> | <STRING DECLARATION STATEMENT><STATEMENT> | <STRING CONCATENATION><STATEMENT> | <ARRAY ASSIGNMENT STATEMENT><STATEMENT> | e
