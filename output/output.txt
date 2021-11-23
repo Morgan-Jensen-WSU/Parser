@@ -1,0 +1,146 @@
+a                                                      is valid.
+
+a+b                                                    is valid.
+
+b*c                                                    is valid.
+
+c-d                                                    is valid.
+
+e/f                                                    is valid.
+
+a+b*c                                                  is valid.
+
+z-y                                                    is valid.
+
+3*4                                                    is valid.
+
+12/6                                                   is valid.
+
+12/6                                                   is valid.
+
+5+4*3                                                  is valid.
+
+12+34*45                                               is valid.
+
+(4/5)                                                  is valid.
+
+2*2+5*5                                                is valid.
+
+5/0                                                    is valid.
+
+42                                                     is valid.
+
+(42)                                                   is valid.
+
+((42))                                                 is valid.
+
+((42))                                                 is valid.
+
+var                                                    is valid.
+
+var+another_var                                        is valid.
+
+var1+var2                                              is valid.
+
+foo*bar                                                is valid.
+
+a+b*c                                                  is valid.
+
+x-y                                                    is valid.
+
+1234*5678                                              is valid.
+
+one+two*three/four                                     is valid.
+
+100000/a_long_variable_name                            is valid.
+
+((12-8)-3)                                             is valid.
+
+(5*(8/4))                                              is valid.
+
+(1+2)*3                                                is valid.
+
+((a/b)+(c*d))                                          is valid.
+
+a_                                                     is valid.
+
+(a_)                                                   is valid.
+
+(v_____2+v__3__)                                       is valid.
+
+3.5                                                    is valid.
+
+(3.5)                                                  is valid.
+
+((3.55))                                               is valid.
+
+3.14159+2.718218                                       is valid.
+
+(((2+3)*4)+(7+(8/2)))                                  is valid.
+
+((((300+var1))))                                       is valid.
+
+(myObject1-MyObject2)+18                               is valid.
+
+(((((9+(2*(110-(30/2))))*8)+1000)/2)+(((3*3*3*3)+1)/2))is valid.
+
+-42                                                    is valid.
+
+(-42)                                                  is valid.
+
+(-42)                                                  is valid.
+
+-var                                                   is valid.
+
+-1*var/-1                                              is valid.
+
+2-3                                                    is valid.
+
+2-3                                                    is valid.
+
+2--3                                                   is valid.
+
+2--3                                                   is valid.
+
+-2-3                                                   is valid.
+
+-2--3                                                  is valid.
+
+-2--3                                                  is valid.
+
+(-2--3)                                                is valid.
+
+(-2--3)                                                is valid.
+
+-2-(-3)                                                is valid.
+
+-2-(-3)                                                is valid.
+
+-2-(-3)                                                is valid.
+
+-2-(-3-(4))                                            is valid.
+
+-2-(-3-(4))                                            is valid.
+
+-2-(-3-(-4))                                           is valid.
+
+-2-(-2-(-2-2))                                         is valid.
+
+-2-(-2-(-2-2))                                         is valid.
+
+-11-(-22-(-33-(-44-(-55-(-66)))))                      is valid.
+
+g^h                                                    is valid.
+
+g^h                                                    is valid.
+
+3^3                                                    is valid.
+
+4^4                                                    is valid.
+
+3^3^3                                                  is valid.
+
+3^(3^3)                                                is valid.
+
+5+4*3^2                                                is valid.
+

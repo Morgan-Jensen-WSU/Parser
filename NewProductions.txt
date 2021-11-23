@@ -44,7 +44,11 @@
 43  GTerm                    PosVal 
 44  GTerm                    SpaceNegVal 
 45  Parens                   (  Expr  ) 
-46  PosVal                   num 
-47  PosVal                   name 
-48  SpaceNegVal              spacenegnum 
-49  SpaceNegVal              spacenegname
+46  PosVal                   num_value 
+47  PosVal                   ish_value
+48  PosVal                   name
+49  SpaceNegVal              spacenegnum_value
+50  SpaceNegVal              spacenegish_value
+51  SpaceNegVal              spacenegname
+52  LineVarName              PosVal LineVarNameRemaining
+53  LineVarName              SpaceNegVal LineVarNameRemaining

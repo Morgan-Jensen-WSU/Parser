@@ -8,12 +8,13 @@ namespace parser
 {
     class TableMaker
     {
-
-        private const string FILE_PATH = "input/test.txt";
+        private const string FILE_PATH = "input/valid.txt";
         private const string DEBUG_OUTPUT_PATH = "output/debug.txt";
+        private const string RESULT_OUTPUT_PATH = "output/output.txt";
 
         private static int ParseIndex { get; set; }
         private static string PrevWord { get; set; }
+        private static string CurrentLine { get; set; }
 
         private List<char> Input = new List<char>();
         private static Dictionary<int, List<string>> Productions = new Dictionary<int, List<string>>();
@@ -28,10 +29,13 @@ namespace parser
         {
             "num",
             "ish",
+            "num_value",
+            "ish_value",
             "name",
             "negnum",
             "negname",
-            "spacenegnum",
+            "spacenegnum_value",
+            "spacenegish_value",
             "spacenegname",
             "procedure",
             "result",
@@ -100,6 +104,8 @@ namespace parser
 
         public TableMaker()
         {
+            if (File.Exists(RESULT_OUTPUT_PATH)) File.Delete(RESULT_OUTPUT_PATH);
+
             TakeInput();
             FillProduction();
             FillTable();
@@ -111,6 +117,8 @@ namespace parser
             
             while (ParseIndex < Input.Count)
             { 
+                using StreamWriter file = new(RESULT_OUTPUT_PATH, append: true);
+
                 if (Input[ParseIndex] == '\n')
                 {
                     ParseIndex++;
@@ -119,14 +127,16 @@ namespace parser
 
                 if (Parse())
                 {
-                    Console.WriteLine("Valid");
+                    file.WriteLine(CurrentLine.PadRight(55) + "is valid.\n");
                     PrevWord = null;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid");
+                    file.WriteLine(CurrentLine.PadRight(55) + "is invalid.\n");
                     PrevWord = null;
                 }
+
+                CurrentLine = "";
             }
         }
 
@@ -550,32 +560,62 @@ namespace parser
                 ")"
             };
 
-            //  PosVal -> num
+            //  PosVal -> num_value
             Productions[46] = new List<string>
             {
                 "PosVal",
-                "num"
+                "num_value"
+            };
+
+            // PosVal -> ish_value
+            Productions[47] = new List<string>
+            {
+                "PosVal",
+                "ish_value"
             };
 
             //  PosVal -> name
-            Productions[47] = new List<string>
+            Productions[48] = new List<string>
             {
                 "PosVal",
                 "name"
             };
 
-            //  SpaceNegVal -> spacenegnum
-            Productions[48] = new List<string>
-            {
-                "SpaceNegVal",
-                "spacenegnum"
-            };
-
-            //  SpaceNegVal -> spacenegname
+            //  SpaceNegVal -> spacenegnum_value
             Productions[49] = new List<string>
             {
                 "SpaceNegVal",
+                "spacenegnum_value"
+            };
+
+            //  SpaceNegVal -> spacenegish_value
+            Productions[50] = new List<string>
+            {
+                "SpaceNegVal",
+                "spacenegish_value"
+            };
+
+            // SpaceNegVal -> spacenegname
+            Productions[51] = new List<string>
+            {
+                "SpaceNegVal",
                 "spacenegname"
+            };
+
+            // LineVarName -> PosVal LineVarNameRemaining
+            Productions[52] = new List<string>
+            {
+                "LineVarName",
+                "PosVal",
+                "LineVarNameRemaining"
+            };
+
+            // LineVarName -> SpaceNegVal LineVarNameRemaining
+            Productions[53] = new List<string>
+            {
+                "LineVarName",
+                "SpaceNegVal",
+                "LineVarNameRemaining"
             };
         }
         private void FillTable()
@@ -629,8 +669,8 @@ namespace parser
             while (!StoppingChar.Contains(Input[ParseIndex]));
 
             if (builder.ToString() == "-" && 
-            !(PrevWord == "name" || PrevWord == "num" || PrevWord == ")" 
-            || PrevWord == "spacenegname" || PrevWord == "spacenegnum"))
+            !(PrevWord == "name" || PrevWord == "num_value" || PrevWord == "ish_value" || PrevWord == ")" 
+            || PrevWord == "spacenegname" || PrevWord == "spacenegnum_value" || PrevWord == "spacenegish_value"))
             {
                 do
                 {
@@ -648,16 +688,28 @@ namespace parser
 
             string builtString = builder.ToString();
 
-            int temp = 0;
-            if (Int32.TryParse(builtString, out temp))
+            int outInt = 0;
+            float outFloat = 0;
+            if (Int32.TryParse(builtString, out outInt))
             {
-                if (temp < 0) // neg number
+                if (outInt < 0) // neg number
                 {
-                    PrevWord = "spacenegnum";
+                    PrevWord = "spacenegnum_value";
                 }
                 else
                 {
-                    PrevWord = "num";
+                    PrevWord = "num_value";
+                }
+            }
+            else if (float.TryParse(builtString, out outFloat))
+            {
+                if (outInt < 0) // neg number
+                {
+                    PrevWord = "spacenegish_value";
+                }
+                else
+                {
+                    PrevWord = "ish_value";
                 }
             }
             else if (!Terminals.Contains(builtString))
@@ -676,6 +728,7 @@ namespace parser
                 PrevWord = builtString;
             }
 
+            CurrentLine += (builtString + "");
             return PrevWord;
         }
 
