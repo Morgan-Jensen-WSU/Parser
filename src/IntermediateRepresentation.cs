@@ -54,7 +54,6 @@ namespace Compiler
                     {
                         if (word == "(" || word == ")")
                         {
-                            OperatorStack.Push(word);
                             break;
                         }
                         else 

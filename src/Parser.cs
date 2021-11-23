@@ -142,11 +142,12 @@ namespace Compiler
         {
             if (ParseIndex >= Input.Count) return "eof";
 
-            if (Input[ParseIndex] == ' ')
+            while (Input[ParseIndex] == ' ')
             {
                 ParseIndex++;
             }
-            else if (Input[ParseIndex] == '\n' || Input[ParseIndex] == '\r')
+            
+            if (Input[ParseIndex] == '\n' || Input[ParseIndex] == '\r')
             {
                 ParseIndex++;
                 return "eof";

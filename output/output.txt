@@ -1,6 +1,4 @@
-3 + 4 * 5                                               is valid. The answer is 23
+4 * 5 + 4                                               is valid. The answer is 24
 
-3 * 4 + 5                                               is valid. The answer is 17
-
-( 3 + 4 ) * 5                                           is valid. The answer is 23
+4 * ( 5 + 4 )                                           is valid. The answer is 36
 
