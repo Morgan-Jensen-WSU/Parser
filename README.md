@@ -169,5 +169,5 @@ Nov 3, 2021: Full LL(1) parser functioning based off of simple math without assi
 * Divide (x / y)
 * Exponents (x ^ y)
 
-*negative numbers are supported* 
+*negative numbers are supported* <br/>
 Parser prints `valid` or `invalid` to console based off of results
