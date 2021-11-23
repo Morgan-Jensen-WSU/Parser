@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace parser
+namespace Compiler
 {
     class Program
     {

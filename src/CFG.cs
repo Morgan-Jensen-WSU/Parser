@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace parser
+namespace Compiler
 {
     public class CFG
     {
