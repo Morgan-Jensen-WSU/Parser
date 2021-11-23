@@ -161,8 +161,8 @@ Language Definition
 <ST> ::= ,<EXP><ST> | e
 ```
 
-Current Log:
-Nov 3, 2021: Full LL(1) parser functioning based off of simple math without assignment 
+Current Log: <br/>
+Nov 3, 2021: Full LL(1) parser functioning based off of simple math without assignment
 * Add (x + y)
 * Subtract (x - y)
 * Multiply (x * y)
