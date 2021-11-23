@@ -15,7 +15,9 @@ namespace Compiler
             "-",
             "*",
             "/",
-            "^"
+            "^",
+            "(",
+            ")"
         };
 
         private Dictionary<string, int> OpPrecedence = new Dictionary<string, int>()
@@ -39,8 +41,13 @@ namespace Compiler
         {
             Words = input.Split(' ');
 
+            OperatorStack = new Stack<string>();
+            OutputStack = new Stack<string>();
+
             foreach (string word in Words)
             {
+                if (word == "") continue;
+
                 if (Operators.Contains(word))
                 {
                     while (IsLowerPrecedenceThanTop(word))
@@ -64,7 +71,7 @@ namespace Compiler
             }
 
 
-            // TODO: Answer = CalculateAnswer(); 
+            Answer = CalculateAnswer(); 
         }
 
         private bool IsLowerPrecedenceThanTop(string op)
@@ -98,6 +105,47 @@ namespace Compiler
                     OutputStack.Push((b ^ a).ToString());
                     break;
             }
+        }
+
+        private string CalculateAnswer()
+        {
+            // TODO: check for variables
+            Stack<string> calcOpStack = new Stack<string>(new Stack<string>(OperatorStack));
+            Stack<string> calcOutStack = new Stack<string>(new Stack<string>(OutputStack));
+
+            while (calcOpStack.Count != 0)
+            {
+                if (calcOpStack.Peek() == "(" || calcOpStack.Peek() == ")")
+                {
+                    calcOpStack.Pop();
+                    continue;
+                }
+
+                int a = int.Parse(calcOutStack.Pop());
+                int b = int.Parse(calcOutStack.Pop());
+                string op = calcOpStack.Pop();
+
+                switch(op)
+                {
+                    case "+":
+                        calcOutStack.Push((b + a).ToString());
+                        break;
+                    case "-":
+                        calcOutStack.Push((b - a).ToString());
+                        break;
+                    case "*":
+                        calcOutStack.Push((b * a).ToString());
+                        break;
+                    case "/":
+                        calcOutStack.Push((b / a).ToString());
+                        break;
+                    case "^":
+                        calcOutStack.Push((b ^ a).ToString());
+                        break;
+                }
+            }
+
+            return calcOutStack.Pop();
         }
     }
 }

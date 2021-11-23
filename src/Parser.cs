@@ -8,7 +8,7 @@ namespace Compiler
 {
     class Parser
     {
-        private const string FILE_PATH = "input/valid.txt";
+        private const string FILE_PATH = "input/test.txt";
         private const string RESULT_OUTPUT_PATH = "output/output.txt";
 
         private static int ParseIndex { get; set; }
@@ -16,6 +16,7 @@ namespace Compiler
         private static string CurrentLine { get; set; }
 
         private List<char> Input = new List<char>();
+        private List<IR> IRs = new List<IR>();
         private TableMaker TMaker { get; set; }
 
         private static List<char> StoppingChar = new List<char>
@@ -57,17 +58,14 @@ namespace Compiler
 
                 if (Parse())
                 {
-                    file.WriteLine(CurrentLine.PadRight(55) + "is valid.\n");
-                    // TODO: Create IR
-                    //  - need a tree class
-                    //      - needs post-order traversal method
-                    //  - need a collection to hold trees
-                    //  - need a symbol lookup table
+                    IR ir = new IR(CurrentLine);
+                    IRs.Add(ir);
+                    file.WriteLine($"{CurrentLine.PadRight(55)} is valid. The answer is {ir.Answer}\n");
                     PrevWord = null;
                 }
                 else
                 {
-                    file.WriteLine(CurrentLine.PadRight(55) + "is invalid.\n");
+                    file.WriteLine($"{CurrentLine.PadRight(55)} is invalid.\n");
                     PrevWord = null;
                 }
 
@@ -231,7 +229,7 @@ namespace Compiler
                 PrevWord = builtString;
             }
 
-            CurrentLine += (builtString + "");
+            CurrentLine += (builtString + " ");
             return PrevWord;
         }
     }
