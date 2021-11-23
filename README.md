@@ -1,5 +1,5 @@
 # Parser
-The makings of an LL(1) compiler made in C# for a made up language
+The makings of an LL(1) compiler made in C# for a made up language (BNF)
 
 # Language
 ```
