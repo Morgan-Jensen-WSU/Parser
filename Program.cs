@@ -6,7 +6,7 @@ namespace parser
     {
         static void Main(string[] args)
         {
-            TableMaker maker = new TableMaker();
+            Parser parser = new Parser();
         }
     }
 }
