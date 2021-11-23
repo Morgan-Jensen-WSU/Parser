@@ -1,0 +1,112 @@
+****************************************************************
+Table
+****************************************************************
+                         num            ish            name           negnum         negname        spacenegnum    spacenegname   procedure      result         ,              (              )              {              }              +              -              *              ^              /              =              @              eof            
+Goal                     0              0              0              0              -              -              -              -              0              -              0              -              -              0              -              -              -              -              -              -              -              -              
+LineFull                 1              1              2              3              -              -              -              -              5              -              4              -              -              6              -              -              -              -              -              -              -              -              
+VarTypeAfter             -              -              7              -              -              -              -              8              -              -              -              -              -              -              -              -              -              -              -              -              -              -              
+LineVarName              -              -              9              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              
+LineVarNameRemaining     -              -              -              -              -              -              -              -              -              -              -              -              -              -              14             14             12             11             13             10             14             14             
+ProcedureParams          -              -              -              -              -              -              -              -              -              -              15             -              -              -              -              -              -              -              -              -              -              -              
+Params                   16             16             -              -              -              -              -              -              -              -              -              17             -              -              -              -              -              -              -              -              17             -              
+MoreParams               -              -              -              -              -              -              -              -              -              18             -              19             -              -              -              -              -              -              -              -              19             -              
+VarType                  20             21             -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              
+Expr                     22             -              22             22             22             22             22             -              -              -              22             -              -              -              -              -              -              -              -              -              -              -              
+LTermAddSub              23             -              23             23             23             23             23             -              -              -              23             -              -              -              -              -              -              -              -              -              -              -              
+LTermMultDiv             24             -              24             24             24             24             24             -              -              -              24             -              -              -              -              -              -              -              -              -              -              -              
+RTermAddSub              25             -              25             -              -              25             25             -              -              -              25             -              -              -              -              -              -              -              -              -              -              -              
+RTermMultDiv             26             -              26             -              -              26             26             -              -              -              26             -              -              -              -              -              -              -              -              -              -              -              
+AddSub'                  -              -              -              -              -              -              -              -              -              -              -              29             -              -              27             28             -              -              -              -              29             29             
+MultDiv'                 -              -              -              -              -              -              -              -              -              -              -              32             -              -              32             32             30             -              31             -              32             32             
+MultAndRightOp           -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              33             -              -              -              -              -              
+DivAndRightOp            -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              34             -              -              -              
+Power'                   -              -              -              -              -              -              -              -              -              -              -              36             -              -              36             36             36             35             36             -              36             36             
+PowerAndRightOp          -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              37             -              -              -              -              
+LTermPower               38             -              38             39             40             38             38             -              -              -              38             -              -              -              -              -              -              -              -              -              -              -              
+RTermPower               41             -              41             -              -              41             41             -              -              -              41             -              -              -              -              -              -              -              -              -              -              -              
+GTerm                    43             -              43             -              -              44             44             -              -              -              42             -              -              -              -              -              -              -              -              -              -              -              
+Parens                   -              -              -              -              -              -              -              -              -              -              45             -              -              -              -              -              -              -              -              -              -              -              
+PosVal                   46             -              47             -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              
+SpaceNegVal              -              -              -              -              -              48             49             -              -              -              -              -              -              -              -              -              -              -              -              -              -              -              
+
+****************************************************************
+First
+****************************************************************
+num:                     num            
+ish:                     ish            
+name:                    name           
+negnum:                  negnum         
+negname:                 negname        
+spacenegnum:             spacenegnum    
+spacenegname:            spacenegname   
+procedure:               procedure      
+result:                  result         
+,:                       ,              
+(:                       (              
+):                       )              
+{:                       {              
+}:                       }              
++:                       +              
+-:                       -              
+*:                       *              
+^:                       ^              
+/:                       /              
+=:                       =              
+@:                       @              
+eof:                     eof            
+Goal:                    negnum         result         }              num            ish            name           (              
+LineFull:                negnum         result         }              num            ish            name           (              
+VarTypeAfter:            procedure      name           
+LineVarName:             name           
+LineVarNameRemaining:    =              ^              *              /              +              -              @              
+ProcedureParams:         (              
+Params:                  @              num            ish            
+MoreParams:              ,              @              
+VarType:                 num            ish            
+Expr:                    negnum         negname        (              num            name           spacenegnum    spacenegname   
+LTermAddSub:             negnum         negname        (              num            name           spacenegnum    spacenegname   
+LTermMultDiv:            negnum         negname        (              num            name           spacenegnum    spacenegname   
+RTermAddSub:             (              num            name           spacenegnum    spacenegname   
+RTermMultDiv:            (              num            name           spacenegnum    spacenegname   
+AddSub':                 +              -              @              
+MultDiv':                @              *              /              
+MultAndRightOp:          *              
+DivAndRightOp:           /              
+Power':                  @              ^              
+PowerAndRightOp:         ^              
+LTermPower:              negnum         negname        (              num            name           spacenegnum    spacenegname   
+RTermPower:              (              num            name           spacenegnum    spacenegname   
+GTerm:                   (              num            name           spacenegnum    spacenegname   
+Parens:                  (              
+PosVal:                  num            name           
+SpaceNegVal:             spacenegnum    spacenegname   
+
+****************************************************************
+Follow
+****************************************************************
+Goal:                    eof            
+LineFull:                eof            
+VarTypeAfter:            eof            
+LineVarName:             eof            
+LineVarNameRemaining:    eof            
+ProcedureParams:         {              
+Params:                  )              
+MoreParams:              )              
+VarType:                 procedure      name           
+Expr:                    eof            )              
+LTermAddSub:             eof            +              -              )              
+LTermMultDiv:            eof            +              -              *              /              )              
+RTermAddSub:             eof            +              -              )              
+RTermMultDiv:            *              /              eof            +              -              )              
+AddSub':                 eof            )              
+MultDiv':                eof            +              -              )              
+MultAndRightOp:          eof            +              -              )              
+DivAndRightOp:           eof            +              -              )              
+Power':                  eof            +              -              *              /              )              
+PowerAndRightOp:         eof            +              -              *              /              )              
+LTermPower:              eof            +              -              *              /              ^              )              
+RTermPower:              *              /              ^              eof            +              -              )              
+GTerm:                   eof            +              -              *              /              ^              )              
+Parens:                  eof            +              -              *              /              ^              )              
+PosVal:                  eof            +              -              *              /              ^              )              
+SpaceNegVal:             eof            +              -              *              /              ^              )              

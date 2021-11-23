@@ -1,0 +1,168 @@
+// Goal -> Expr
+Productions[0] = new List<string> 
+{ 
+    "Goal",
+    "Expr" 
+};
+
+// Expr -> LTerm Expr'
+Productions[1] = new List<string>
+{
+    "Expr",
+    "LTerm",
+    "Expr'"
+};
+
+// LTerm -> LFactor Term'
+Productions[2] = new List<string>
+{
+    "LTerm",
+    "LFactor",
+    "Term'"
+};
+
+// RTerm -> RFactor Term'
+Productions[3] = new List<string>
+{
+    "RTerm",
+    "RFactor",
+    "Term'"
+};
+
+// Expr' -> + RTerm Expr'
+Productions[4] = new List<string>
+{
+    "Expr'",
+    "+",
+    "RTerm",
+    "Expr'"                
+};
+
+// Expr' -> - RTerm Expr'
+Productions[5] = new List<string>
+{
+    "Expr'",
+    "-",
+    "RTerm",
+    "Expr'"
+};
+
+// Expr' -> e
+Productions[6] = new List<string> 
+{ 
+    "Expr'",
+    "@" 
+};
+
+// Term' -> * RTerm Term'
+Productions[7] = new List<string>
+{
+    "Term'",
+    "*",
+    "RFactor",
+    "Term'"
+};
+
+// Term' -> / RTerm Term'
+Productions[8] = new List<string>
+{
+    "Term'",
+    "/",
+    "RFactor",
+    "Term'"
+};
+
+// Term' -> e
+Productions[9] = new List<string> 
+{ 
+    "Term'",
+    "@" 
+};
+
+// LFactor -> GFactor
+Productions[10] = new List<string>
+{
+    "LFactor",
+    "GFactor"
+};
+
+// LFactor -> negnum
+Productions[11] = new List<string> 
+{ 
+    "LFactor",
+    "negnum" 
+};
+
+// LFactor -> negname
+Productions[12] = new List<string>
+{
+    "LFactor",
+    "negname"
+};
+
+// RFactor -> GFactor
+Productions[13] = new List<string>
+{
+    "RFactor",
+    "GFactor"
+};
+
+// GFactor -> ( Expr )
+Productions[14] = new List<string>
+{
+    "GFactor",
+    "(",
+    "Expr",
+    ")"
+};
+
+// GFactor -> PosVal
+Productions[15] = new List<string>
+{
+    "GFactor",
+    "PosVal"
+};
+
+// GFactor -> SpaceNegVal
+Productions[16] = new List<string>
+{
+    "GFactor",
+    "SpaceNegVal"
+};
+
+// PosVal -> num
+Productions[17] = new List<string>
+{
+    "PosVal",
+    "num"
+};
+
+// PosVal -> name
+Productions[18] = new List<string>
+{
+    "PosVal",
+    "name"
+};
+
+// SpaceNegVal -> spacenegnum
+Productions[19] = new List<string>
+{
+    "SpaceNegVal",
+    "spacenegnum"
+};
+
+// SpaceNegVal -> spacenegname
+Productions[20] = new List<string>
+{
+    "SpaceNegVal",
+    "spacenegname"
+};
+
+// Term' -> ^ RTerm Term'
+Productions[21] = new List<string>
+{
+    "Term'",
+    "^",
+    "RFactor",
+    "Term'"
+};

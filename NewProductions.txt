@@ -1,0 +1,50 @@
+0   Goal                     LineFull 
+1   LineFull                 VarType  VarTypeAfter 
+2   LineFull                 LineVarName 
+3   LineFull                 negnum  Power'  MultDiv'  AddSub' 
+4   LineFull                 Parens  Power'  MultDiv'  AddSub' 
+5   LineFull                 result  GTerm 
+6   LineFull                 } 
+7   VarTypeAfter             LineVarName 
+8   VarTypeAfter             procedure  name  ProcedureParams  { 
+9   LineVarName              name  LineVarNameRemaining 
+10  LineVarNameRemaining     =  Expr 
+11  LineVarNameRemaining     PowerAndRightOp  MultDiv'  AddSub' 
+12  LineVarNameRemaining     MultAndRightOp  AddSub' 
+13  LineVarNameRemaining     DivAndRightOp  AddSub' 
+14  LineVarNameRemaining     AddSub' 
+15  ProcedureParams          (  Params  ) 
+16  Params                   VarType  name  MoreParams 
+17  Params                   ε 
+18  MoreParams               ,  VarType  name  MoreParams 
+19  MoreParams               ε 
+20  VarType                  num 
+21  VarType                  ish    
+22  Expr                     LTermAddSub  AddSub' 
+23  LTermAddSub              LTermMultDiv  MultDiv' 
+24  LTermMultDiv             LTermPower  Power' 
+25  RTermAddSub              RTermMultDiv  MultDiv' 
+26  RTermMultDiv             RTermPower  Power' 
+27  AddSub'                  +  RTermAddSub  AddSub' 
+28  AddSub'                  -  RTermAddSub  AddSub' 
+29  AddSub'                  ε 
+30  MultDiv'                 MultAndRightOp 
+31  MultDiv'                 DivAndRightOp 
+32  MultDiv'                 ε 
+33  MultAndRightOp           *  RTermMultDiv  MultDiv' 
+34  DivAndRightOp            /  RTermMultDiv  MultDiv'  
+35  Power'                   PowerAndRightOp 
+36  Power'                   ε 
+37  PowerAndRightOp          ^  RTermPower  Power' 
+38  LTermPower               GTerm 
+39  LTermPower               negnum 
+40  LTermPower               negname 
+41  RTermPower               GTerm 
+42  GTerm                    Parens  
+43  GTerm                    PosVal 
+44  GTerm                    SpaceNegVal 
+45  Parens                   (  Expr  ) 
+46  PosVal                   num 
+47  PosVal                   name 
+48  SpaceNegVal              spacenegnum 
+49  SpaceNegVal              spacenegname

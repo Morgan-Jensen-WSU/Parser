@@ -1,0 +1,190 @@
+private static List<string> SampleTerminals = new List<string>
+{
+    "num",
+    "name",
+    "(",
+    ")",
+    "+",
+    "-",
+    "*",
+    "/",
+    "eof"
+};
+
+private static List<string> SampleNonTerminals = new List<string>
+{
+    "Goal",
+    "Expr",
+    "Expr'",
+    "Term",
+    "Term'",
+    "Factor"
+};
+
+private void FillSampleProduction()
+{
+    Productions[0] = new List<string> 
+    { 
+        "Goal",
+        "Expr" 
+    };
+
+    Productions[1] = new List<string> 
+    { 
+        "Expr",
+        "Term",
+        "Expr'" 
+    };
+
+    Productions[2] = new List<string> 
+    { 
+        "Expr'",
+        "+",
+        "Term",
+        "Expr'" 
+    };
+    
+    Productions[3] = new List<string> 
+    { 
+        "Expr'",
+        "-",
+        "Term",
+        "Expr'" 
+    };
+
+    Productions[4] = new List<string> 
+    { 
+        "Expr'",
+        "@" 
+    };
+
+    Productions[5] = new List<string> 
+    { 
+        "Term",
+        "Factor",
+        "Term'" 
+    };
+
+    Productions[6] = new List<string> 
+    { 
+        "Term'",
+        "*",
+        "Factor",
+        "Term'" 
+    };
+
+    Productions[7] = new List<string> 
+    { 
+        "Term'",
+        "/",
+        "Factor",
+        "Term'"
+    };
+
+    Productions[8] = new List<string> 
+    { 
+        "Term'",
+        "@" 
+    };
+
+    Productions[9] = new List<string> 
+    { 
+        "Factor",
+        "(",
+        "Expr",
+        ")"
+    };
+
+    Productions[10] = new List<string> 
+    { 
+        "Factor",
+        "num"
+    };
+
+    Productions[11] = new List<string> 
+    { 
+        "Factor",
+        "name" 
+    };
+}
+
+private void FillSampleTable()
+{
+    Table["Goal"] = new Dictionary<string, int>()
+    {
+        { "eof",   -1 },
+        { "+",     -1 },
+        { "-",     -1 },
+        { "*",     -1 },
+        { "/",     -1 },
+        { "(",      0 },
+        { ")",     -1 },
+        { "name",   0 },
+        { "num",    0 }
+    };
+
+    Table["Expr"] = new Dictionary<string, int>()
+    {
+        { "eof",   -1 },
+        { "+",     -1 },
+        { "-",     -1 },
+        { "*",     -1 },
+        { "/",     -1 },
+        { "(",      1 },
+        { ")",     -1 },
+        { "name",   1 },
+        { "num",    1 }
+    };
+
+    Table["Expr'"] = new Dictionary<string, int>()
+    {
+        { "eof",    4 },
+        { "+",      2 },
+        { "-",      3 },
+        { "*",     -1 },
+        { "/",     -1 },
+        { "(",     -1 },
+        { ")",      4 },
+        { "name",  -1 },
+        { "num",   -1 }
+    };
+
+    Table["Term"] = new Dictionary<string, int>()
+    {
+        { "eof",    -1 },
+        { "+",      -1 },
+        { "-",      -1 },
+        { "*",      -1 },
+        { "/",      -1 },
+        { "(",       5 },
+        { ")",      -1 },
+        { "name",    5 },
+        { "num",     5 }
+    };
+
+    Table["Term'"] = new Dictionary<string, int>()
+    {
+        { "eof",     8 },
+        { "+",       8 },
+        { "-",       8 },
+        { "*",       6 },
+        { "/",       7 },
+        { "(",      -1 },
+        { ")",       8 },
+        { "name",   -1 },
+        { "num",    -1 }
+    };
+
+    Table["Factor"] = new Dictionary<string, int>()
+    {
+        { "eof",    -1 },
+        { "+",      -1 },
+        { "-",      -1 },
+        { "*",      -1 },
+        { "/",      -1 },
+        { "(",       9 },
+        { ")",      -1 },
+        { "name",   11 },
+        { "num",    10 }
+    };
+}
