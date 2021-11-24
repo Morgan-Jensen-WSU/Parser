@@ -21,7 +21,7 @@ namespace Compiler
             "spacenegish_value",
             "spacenegname",
             "procedure",
-            "result",
+            "return",
             ",",
             "(",
             ")",

@@ -1,4 +1,0 @@
-num a = 5                                               is valid. The answer is 5, num a = 5 
-
-num b = a                                               is valid. The answer is a, num b = a 
-

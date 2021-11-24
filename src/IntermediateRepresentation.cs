@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Compiler
@@ -36,8 +37,6 @@ namespace Compiler
         private Stack<string> OutputStack { get; set; }
         private string[] Words { get; set; }
 
-
-
         public IR(string input)
         {
             Words = input.Split(' ');
@@ -60,7 +59,7 @@ namespace Compiler
                         }
                         else if (word == ")")
                         {
-                            while (OperatorStack.Peek() != "(")
+                            while (OperatorStack.Peek() != "(" && OperatorStack.Peek() != ")")
                             {
                                 Operate();
                             }
@@ -78,12 +77,6 @@ namespace Compiler
                     PostFixString += word + " ";
                 }
             }
-
-            foreach (var op in OperatorStack)
-            {
-                if (op != "(" && op != ")") PostFixString += op + " ";
-            }
-
 
             Answer = CalculateAnswer();
         }
@@ -104,8 +97,8 @@ namespace Compiler
 
             try
             {
-                flA = float.Parse(a); 
-            } 
+                flA = float.Parse(a);
+            }
             catch
             {
                 flA = float.Parse(SymbolTable.Lookup(a).Rep.Answer);
@@ -136,90 +129,41 @@ namespace Compiler
                     OutputStack.Push((flB * flA).ToString());
                     break;
                 case "/":
+                    if (flA == 0f)
+                    {
+                        ErrMod.ThrowError("Cannot divide by zero.");
+                        Answer = "Error";
+                        return;
+                    }
                     OutputStack.Push((flB / flA).ToString());
                     break;
-            }
-
-            if (op == "^")
-            {
-                int pwrA = int.Parse(a);
-                int pwrB = int.Parse(b);
-
-                OutputStack.Push((pwrA + pwrB).ToString());
-                PostFixString += op + " ";
+                case "^":
+                    OutputStack.Push(Math.Pow(flB, flA).ToString());
+                    break;
             }
         }
 
         private string CalculateAnswer()
         {
-            Stack<string> calcOpStack = new Stack<string>(new Stack<string>(OperatorStack));
-            Stack<string> calcOutStack = new Stack<string>(new Stack<string>(OutputStack));
-
-            while (calcOpStack.Count != 0)
+            while (OperatorStack.Count != 0)
             {
-                if (calcOpStack.Peek() == "(" || calcOpStack.Peek() == ")")
+                if (OperatorStack.Peek() == "(" || OperatorStack.Peek() == ")")
                 {
-                    calcOpStack.Pop();
-                    continue;
+                    OperatorStack.Pop(); 
                 }
-
-                string strA = calcOutStack.Pop();
-                string strB = calcOutStack.Pop();
-
-                float a;
-                float b;
-
-                try
+                else
                 {
-                    a = float.Parse(strA);
-                }
-                catch
-                {
-                    if (SymbolTable.Lookup(strA) != null)
-                        a = float.Parse(SymbolTable.Lookup(strA).Rep.Answer);
-                    else
-                        return "ERROR";
-                }
-                try
-                {
-                    b = float.Parse(strB);
-                }
-                catch
-                {
-                    if (SymbolTable.Lookup(strA) != null)
-                        b = float.Parse(SymbolTable.Lookup(strB).Rep.Answer);
-                    else
-                        return "ERROR";
-                }
-
-                string op = calcOpStack.Pop();
-
-                switch (op)
-                {
-                    case "+":
-                        calcOutStack.Push((b + a).ToString());
-                        break;
-                    case "-":
-                        calcOutStack.Push((b - a).ToString());
-                        break;
-                    case "*":
-                        calcOutStack.Push((b * a).ToString());
-                        break;
-                    case "/":
-                        calcOutStack.Push((b / a).ToString());
-                        break;
-                }
-
-                if (op == "^")
-                {
-                    int pwrA = int.Parse(strA);
-                    int pwrB = int.Parse(strB);
-
-                    OutputStack.Push((pwrA + pwrB).ToString());
-                    PostFixString += op + " ";
+                    Operate();
                 }
             }
-            return calcOutStack.Pop();
+
+            string retVal = OutputStack.Pop();
+
+            if (SymbolTable.IsVarDefined(retVal))
+            {
+                return SymbolTable.Lookup(retVal).Rep.Answer;
+            }
+            return retVal;
         }
     }
 }

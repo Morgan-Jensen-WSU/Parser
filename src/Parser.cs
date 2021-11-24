@@ -43,6 +43,7 @@ namespace Compiler
 
             TMaker = new TableMaker();
             STable = new SymbolTable();
+            ErrMod.ResetErrMod(); 
             TakeInput();
 
             ParseIndex = 0;
@@ -59,10 +60,22 @@ namespace Compiler
 
                 if (Parse())
                 {
+                    int iTestAnswer;
+                    float fTestAnswer;
+
                     IR ir = new IR(CurrentLine);
                     AssignVariables(ir);
-                    file.WriteLine($"{CurrentLine.PadRight(55)} is valid. The answer is {ir.Answer}, {ir.PostFixString}\n");
-                    // file.WriteLine($"{CurrentLine} is valid");
+                    file.WriteLine($"{CurrentLine.PadRight(55)} is valid.");
+                    if (int.TryParse(ir.Answer, out iTestAnswer))
+                    {
+                        file.WriteLine($"The answer is {ir.Answer}\nThe postfix IR is {ir.PostFixString}");
+                    }
+                    else if (float.TryParse(ir.Answer, out fTestAnswer))
+                    {
+                        file.WriteLine($"The answer is {ir.Answer}\nThe postfix IR is {ir.PostFixString}");
+                    }
+
+                    file.Write("\n");
                     PrevWord = null;
                 }
                 else

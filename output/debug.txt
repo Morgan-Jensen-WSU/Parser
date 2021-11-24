@@ -1,7 +1,7 @@
 ****************************************************************
 Table
 ****************************************************************
-                         num            ish            num_value      ish_value      name           negnum         negname        spacenegnum_valuespacenegish_valuespacenegname   procedure      result         ,              (              )              {              }              +              -              *              ^              /              =              @              eof            
+                         num            ish            num_value      ish_value      name           negnum         negname        spacenegnum_valuespacenegish_valuespacenegname   procedure      return         ,              (              )              {              }              +              -              *              ^              /              =              @              eof            
 Goal                     0              0              0              0              0              0              -              0              0              0              -              0              -              0              -              -              0              -              -              -              -              -              -              -              -              
 LineFull                 1              1              2              2              2              3              -              2              2              2              -              5              -              4              -              -              6              -              -              -              -              -              -              -              -              
 VarTypeAfter             -              -              7              7              7              -              -              7              7              7              8              -              -              -              -              -              -              -              -              -              -              -              -              -              -              
@@ -43,7 +43,7 @@ spacenegnum_value:       spacenegnum_value
 spacenegish_value:       spacenegish_value
 spacenegname:            spacenegname   
 procedure:               procedure      
-result:                  result         
+return:                  return         
 ,:                       ,              
 (:                       (              
 ):                       )              
@@ -57,8 +57,8 @@ result:                  result
 =:                       =              
 @:                       @              
 eof:                     eof            
-Goal:                    negnum         result         }              num            ish            name           num_value      ish_value      spacenegnum_valuespacenegish_valuespacenegname   (              
-LineFull:                negnum         result         }              num            ish            name           num_value      ish_value      spacenegnum_valuespacenegish_valuespacenegname   (              
+Goal:                    negnum         return         }              num            ish            name           num_value      ish_value      spacenegnum_valuespacenegish_valuespacenegname   (              
+LineFull:                negnum         return         }              num            ish            name           num_value      ish_value      spacenegnum_valuespacenegish_valuespacenegname   (              
 VarTypeAfter:            procedure      name           num_value      ish_value      spacenegnum_valuespacenegish_valuespacenegname   
 LineVarName:             name           num_value      ish_value      spacenegnum_valuespacenegish_valuespacenegname   
 LineVarNameRemaining:    =              ^              *              /              +              -              @              

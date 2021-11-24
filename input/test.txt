@@ -1,2 +1,2 @@
-num a = 5
-num b = a
+num var42 = 3^3^3
+num var43 = 3^(3^3)

@@ -58,11 +58,11 @@ namespace Compiler
                 "AddSub'"
             };
 
-            // LineFull -> result GTerm
+            // LineFull -> return GTerm
             Productions[5] = new List<string>
             {
                 "LineFull",
-                "result",
+                "return",
                 "GTerm"
             };
 
