@@ -1,0 +1,4 @@
+ERROR: Variable 5 does not exist in this context.
+ERROR: A variable called a already exists in this instance.
+ERROR: Variable b does not exist in this context.
+ERROR: Variable b does not exist in this context.

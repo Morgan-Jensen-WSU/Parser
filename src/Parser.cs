@@ -16,8 +16,8 @@ namespace Compiler
         private static string CurrentLine { get; set; }
 
         private List<char> Input = new List<char>();
-        private List<IR> IRs = new List<IR>();
         private TableMaker TMaker { get; set; }
+        private SymbolTable STable { get; set; }
 
         private static List<char> StoppingChar = new List<char>
         {
@@ -42,12 +42,13 @@ namespace Compiler
             if (File.Exists(RESULT_OUTPUT_PATH)) File.Delete(RESULT_OUTPUT_PATH);
 
             TMaker = new TableMaker();
+            STable = new SymbolTable();
             TakeInput();
 
             ParseIndex = 0;
-            
+
             while (ParseIndex < Input.Count)
-            { 
+            {
                 using StreamWriter file = new(RESULT_OUTPUT_PATH, append: true);
 
                 if (Input[ParseIndex] == '\n')
@@ -59,7 +60,7 @@ namespace Compiler
                 if (Parse())
                 {
                     IR ir = new IR(CurrentLine);
-                    IRs.Add(ir);
+                    AssignVariables(ir);
                     file.WriteLine($"{CurrentLine.PadRight(55)} is valid. The answer is {ir.Answer}, {ir.PostFixString}\n");
                     // file.WriteLine($"{CurrentLine} is valid");
                     PrevWord = null;
@@ -147,7 +148,7 @@ namespace Compiler
             {
                 ParseIndex++;
             }
-            
+
             if (Input[ParseIndex] == '\n' || Input[ParseIndex] == '\r')
             {
                 ParseIndex++;
@@ -164,15 +165,15 @@ namespace Compiler
                 }
                 builder.Append(Input[ParseIndex]);
                 ParseIndex++;
-                
+
                 if (TableMaker.Terminals.Contains(builder.ToString())) break;
 
                 if (ParseIndex >= Input.Count) break;
             }
             while (!StoppingChar.Contains(Input[ParseIndex]));
 
-            if (builder.ToString() == "-" && 
-            !(PrevWord == "name" || PrevWord == "num_value" || PrevWord == "ish_value" || PrevWord == ")" 
+            if (builder.ToString() == "-" &&
+            !(PrevWord == "name" || PrevWord == "num_value" || PrevWord == "ish_value" || PrevWord == ")"
             || PrevWord == "spacenegname" || PrevWord == "spacenegnum_value" || PrevWord == "spacenegish_value"))
             {
                 do
@@ -185,8 +186,8 @@ namespace Compiler
                     ParseIndex++;
 
                     if (ParseIndex >= Input.Count) break;
-                } 
-                while (!StoppingChar.Contains(Input[ParseIndex])); 
+                }
+                while (!StoppingChar.Contains(Input[ParseIndex]));
             }
 
             string builtString = builder.ToString();
@@ -233,6 +234,37 @@ namespace Compiler
 
             CurrentLine += (builtString + " ");
             return PrevWord;
+        }
+
+        private void AssignVariables(IR ir)
+        {
+            if (CurrentLine.Contains("="))
+            {
+                string[] line = CurrentLine.Split("=");
+                string[] lhs = line[0].Split(' ');
+
+                // if declaring variable (num var = 1)
+                if (lhs.Length > 1)
+                {
+                    string varType = lhs[0];
+                    string varName = lhs[1];
+
+                    if (SymbolTable.IsVarDefined(varName))
+                    {
+                        // var name cannot be reused
+                        ErrMod.ThrowError($"A variable called {varName} already exists in this instance.");
+                    }
+                    else
+                    {
+                        STable.Insert(Variable.DecideVarType(varType), varName, ir);
+                    }
+                }
+                // if assigning variable (var = 1)
+                else
+                {
+                    STable.Update(lhs[0], ir);
+                }
+            }
         }
     }
 }

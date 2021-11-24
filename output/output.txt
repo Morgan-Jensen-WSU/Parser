@@ -1,12 +1,4 @@
-( 1 + 2 ) * ( 5 - 2 )  is valid
-1 + 2 * ( 5 - 2 )  is valid
-( 1 + 2 ) * 5 - 2  is valid
-( 1 + 2 * 5 ) - 2  is valid
-4.432 + 5  is valid
-num a = 5  is valid
-num var = a + 5  is valid
-num procedure add ( num a , num b ) {  is valid
-num thing = 5 + 5  is valid
-return thing                                            is invalid.
+num a = 5                                               is valid. The answer is 5, num a = 5 
 
-}  is valid
+num b = a                                               is valid. The answer is a, num b = a 
+

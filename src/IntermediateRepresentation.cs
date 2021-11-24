@@ -99,9 +99,26 @@ namespace Compiler
         {
             string a = OutputStack.Pop();
             string b = OutputStack.Pop();
+            float flA;
+            float flB;
 
-            float flA = float.Parse(a);
-            float flB = float.Parse(b);
+            try
+            {
+                flA = float.Parse(a); 
+            } 
+            catch
+            {
+                flA = float.Parse(SymbolTable.Lookup(a).Rep.Answer);
+            }
+            try
+            {
+                flB = float.Parse(b);
+            }
+            catch
+            {
+                flB = float.Parse(SymbolTable.Lookup(b).Rep.Answer);
+            }
+
             string op = OperatorStack.Pop();
 
             PostFixString += op + " ";
@@ -135,7 +152,6 @@ namespace Compiler
 
         private string CalculateAnswer()
         {
-            // TODO: check for variables
             Stack<string> calcOpStack = new Stack<string>(new Stack<string>(OperatorStack));
             Stack<string> calcOutStack = new Stack<string>(new Stack<string>(OutputStack));
 
@@ -150,8 +166,32 @@ namespace Compiler
                 string strA = calcOutStack.Pop();
                 string strB = calcOutStack.Pop();
 
-                float a = float.Parse(strA);
-                float b = float.Parse(strB);
+                float a;
+                float b;
+
+                try
+                {
+                    a = float.Parse(strA);
+                }
+                catch
+                {
+                    if (SymbolTable.Lookup(strA) != null)
+                        a = float.Parse(SymbolTable.Lookup(strA).Rep.Answer);
+                    else
+                        return "ERROR";
+                }
+                try
+                {
+                    b = float.Parse(strB);
+                }
+                catch
+                {
+                    if (SymbolTable.Lookup(strA) != null)
+                        b = float.Parse(SymbolTable.Lookup(strB).Rep.Answer);
+                    else
+                        return "ERROR";
+                }
+
                 string op = calcOpStack.Pop();
 
                 switch (op)
