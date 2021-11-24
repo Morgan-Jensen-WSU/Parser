@@ -1,4 +1,12 @@
-4 * 5 + 4                                               is valid. The answer is 24
+( 1 + 2 ) * ( 5 - 2 )  is valid
+1 + 2 * ( 5 - 2 )  is valid
+( 1 + 2 ) * 5 - 2  is valid
+( 1 + 2 * 5 ) - 2  is valid
+4.432 + 5  is valid
+num a = 5  is valid
+num var = a + 5  is valid
+num procedure add ( num a , num b ) {  is valid
+num thing = 5 + 5  is valid
+return thing                                            is invalid.
 
-4 * ( 5 + 4 )                                           is valid. The answer is 36
-
+}  is valid

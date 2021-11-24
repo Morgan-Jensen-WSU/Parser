@@ -8,6 +8,7 @@ namespace Compiler
     public class IR
     {
         public string Answer { get; set; }
+        public string PostFixString { get; set; }
 
         private List<string> Operators = new List<string>
         {
@@ -34,12 +35,13 @@ namespace Compiler
         private Stack<string> OperatorStack { get; set; }
         private Stack<string> OutputStack { get; set; }
         private string[] Words { get; set; }
-        
+
 
 
         public IR(string input)
         {
             Words = input.Split(' ');
+            PostFixString = "";
 
             OperatorStack = new Stack<string>();
             OutputStack = new Stack<string>();
@@ -52,11 +54,18 @@ namespace Compiler
                 {
                     while (IsLowerPrecedenceThanTop(word))
                     {
-                        if (word == "(" || word == ")")
+                        if (word == "(")
                         {
                             break;
                         }
-                        else 
+                        else if (word == ")")
+                        {
+                            while (OperatorStack.Peek() != "(")
+                            {
+                                Operate();
+                            }
+                        }
+                        else
                         {
                             Operate();
                         }
@@ -66,11 +75,17 @@ namespace Compiler
                 else
                 {
                     OutputStack.Push(word);
+                    PostFixString += word + " ";
                 }
             }
 
+            foreach (var op in OperatorStack)
+            {
+                if (op != "(" && op != ")") PostFixString += op + " ";
+            }
 
-            Answer = CalculateAnswer(); 
+
+            Answer = CalculateAnswer();
         }
 
         private bool IsLowerPrecedenceThanTop(string op)
@@ -82,27 +97,39 @@ namespace Compiler
 
         private void Operate()
         {
-            int a = int.Parse(OutputStack.Pop());
-            int b = int.Parse(OutputStack.Pop());
+            string a = OutputStack.Pop();
+            string b = OutputStack.Pop();
+
+            float flA = float.Parse(a);
+            float flB = float.Parse(b);
             string op = OperatorStack.Pop();
 
-            switch(op)
+            PostFixString += op + " ";
+
+
+            switch (op)
             {
                 case "+":
-                    OutputStack.Push((b + a).ToString());
+                    OutputStack.Push((flB + flA).ToString());
                     break;
                 case "-":
-                    OutputStack.Push((b - a).ToString());
+                    OutputStack.Push((flB - flA).ToString());
                     break;
                 case "*":
-                    OutputStack.Push((b * a).ToString());
+                    OutputStack.Push((flB * flA).ToString());
                     break;
                 case "/":
-                    OutputStack.Push((b / a).ToString());
+                    OutputStack.Push((flB / flA).ToString());
                     break;
-                case "^":
-                    OutputStack.Push((b ^ a).ToString());
-                    break;
+            }
+
+            if (op == "^")
+            {
+                int pwrA = int.Parse(a);
+                int pwrB = int.Parse(b);
+
+                OutputStack.Push((pwrA + pwrB).ToString());
+                PostFixString += op + " ";
             }
         }
 
@@ -120,11 +147,14 @@ namespace Compiler
                     continue;
                 }
 
-                int a = int.Parse(calcOutStack.Pop());
-                int b = int.Parse(calcOutStack.Pop());
+                string strA = calcOutStack.Pop();
+                string strB = calcOutStack.Pop();
+
+                float a = float.Parse(strA);
+                float b = float.Parse(strB);
                 string op = calcOpStack.Pop();
 
-                switch(op)
+                switch (op)
                 {
                     case "+":
                         calcOutStack.Push((b + a).ToString());
@@ -138,12 +168,17 @@ namespace Compiler
                     case "/":
                         calcOutStack.Push((b / a).ToString());
                         break;
-                    case "^":
-                        calcOutStack.Push((b ^ a).ToString());
-                        break;
+                }
+
+                if (op == "^")
+                {
+                    int pwrA = int.Parse(strA);
+                    int pwrB = int.Parse(strB);
+
+                    OutputStack.Push((pwrA + pwrB).ToString());
+                    PostFixString += op + " ";
                 }
             }
-
             return calcOutStack.Pop();
         }
     }

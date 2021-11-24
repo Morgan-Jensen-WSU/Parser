@@ -60,7 +60,8 @@ namespace Compiler
                 {
                     IR ir = new IR(CurrentLine);
                     IRs.Add(ir);
-                    file.WriteLine($"{CurrentLine.PadRight(55)} is valid. The answer is {ir.Answer}\n");
+                    file.WriteLine($"{CurrentLine.PadRight(55)} is valid. The answer is {ir.Answer}, {ir.PostFixString}\n");
+                    // file.WriteLine($"{CurrentLine} is valid");
                     PrevWord = null;
                 }
                 else
