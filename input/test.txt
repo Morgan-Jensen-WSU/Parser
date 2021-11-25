@@ -1,2 +1,9 @@
-num var42 = 3^3^3
-num var43 = 3^(3^3)
+
+num procedure add(num a, num b) {
+num result = a + b
+return result
+}
+num procedure mult(num a, num b) {
+num result = a * b
+return result
+}

@@ -85,7 +85,9 @@ namespace Compiler
         {
             if (OperatorStack.Count == 0) return false;
 
-            return OpPrecedence[op] < OpPrecedence[OperatorStack.Peek()];
+            if (OperatorStack.Peek() == "(" || OperatorStack.Peek() == ")") return false;
+
+            return OpPrecedence[op] <= OpPrecedence[OperatorStack.Peek()];
         }
 
         private void Operate()
@@ -100,8 +102,18 @@ namespace Compiler
                 flA = float.Parse(a);
             }
             catch
-            {
-                flA = float.Parse(SymbolTable.Lookup(a).Rep.Answer);
+            { 
+                try
+                {
+                    flA = float.Parse(SymbolTable.Lookup(a).Rep.Answer);
+                }
+                catch
+                {
+                    OutputStack.Push(b);
+                    OutputStack.Push(a);
+                    OperatorStack.Pop();
+                    return;
+                }
             }
             try
             {
@@ -109,7 +121,17 @@ namespace Compiler
             }
             catch
             {
-                flB = float.Parse(SymbolTable.Lookup(b).Rep.Answer);
+                try
+                {
+                    flB = float.Parse(SymbolTable.Lookup(b).Rep.Answer);
+                }
+                catch
+                {
+                    OutputStack.Push(b);
+                    OutputStack.Push(a);
+                    OperatorStack.Pop();
+                    return;
+                }
             }
 
             string op = OperatorStack.Pop();
@@ -156,6 +178,8 @@ namespace Compiler
                     Operate();
                 }
             }
+
+            if (OutputStack.Count == 0) return "NONE";
 
             string retVal = OutputStack.Pop();
 

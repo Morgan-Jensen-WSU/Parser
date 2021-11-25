@@ -8,7 +8,7 @@ namespace Compiler
 {
     class Parser
     {
-        private const string FILE_PATH = "input/test.txt";
+        private const string FILE_PATH = "input/Assignment2Valid.txt";
         private const string RESULT_OUTPUT_PATH = "output/output.txt";
 
         private static int ParseIndex { get; set; }
