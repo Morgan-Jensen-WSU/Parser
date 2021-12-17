@@ -1,0 +1,68 @@
+0     Goal                     LineFull 
+1     LineFull                 VarType  VarTypeAfter 
+2     LineFull                 LineVarName 
+3     * LineFull               ExprWithoutName 
+4     LineFull                 return  GTerm 
+5     * LineFull               if  (  Condition  )  { 
+6     * LineFull               else  { 
+7     LineFull                 } 
+8     * LineFull               printNum name 
+9     * LineFull               printIsh name 
+10    * LineFull               readNum name 
+11    * LineFull               readIsh name 
+12    * LineFull               printString "any text in here"  
+13    VarTypeAfter             LineVarName 
+14    VarTypeAfter             procedure  name  ProcedureParams  { 
+15    LineVarName              name  LineVarNameRemaining 
+16    LineVarNameRemaining     =  Expr 
+17    LineVarNameRemaining     PowerAndRightOp  MultDiv'  AddSub' 
+18    LineVarNameRemaining     MultAndRightOp  AddSub' 
+19    LineVarNameRemaining     DivAndRightOp  AddSub' 
+20    LineVarNameRemaining     AddSub' 
+21    * ExprWithoutName        num_value  Power'  MultDiv'  AddSub' 
+22    * ExprWithoutName        negnum_value  Power'  MultDiv'  AddSub' 
+23    * ExprWithoutName        Parens  Power'  MultDiv'  AddSub' 
+24    * Condition              Expr  ==  Expr 
+25    * Condition              Expr  !=  Expr         
+26    ProcedureParams          (  Params  ) 
+27    Params                   VarType  name  MoreParams 
+28    Params                   ε 
+29    MoreParams               ,  VarType  name  MoreParams 
+30    MoreParams               ε 
+31    VarType                  num 
+32    VarType                  ish    
+33    Expr                     LTermAddSub  AddSub' 
+34    LTermAddSub              LTermMultDiv  MultDiv' 
+35    LTermMultDiv             LTermPower  Power' 
+36    RTermAddSub              RTermMultDiv  MultDiv' 
+37    RTermMultDiv             RTermPower  Power' 
+38    AddSub'                  +  RTermAddSub  AddSub' 
+39    AddSub'                  -  RTermAddSub  AddSub' 
+40    AddSub'                  ε 
+41    MultDiv'                 MultAndRightOp 
+42    MultDiv'                 DivAndRightOp 
+43    MultDiv'                 ε 
+44    MultAndRightOp           *  RTermMultDiv  MultDiv' 
+45    DivAndRightOp            /  RTermMultDiv  MultDiv'  
+46    Power'                   PowerAndRightOp 
+47    Power'                   ε 
+48    PowerAndRightOp          ^  RTermPower  Power' 
+49    LTermPower               GTerm 
+50    LTermPower               negnum_value 
+51    LTermPower               negish_value 
+52    LTermPower               negname 
+53    RTermPower               GTerm 
+54    * GTerm                  NameOrProcedure 
+55    GTerm                    Parens  
+56    * GTerm                  num_value 
+57    * GTerm                  ish_value 
+58    GTerm                    SpaceNegVal 
+59    * NameOrProcedure        name  Arguments 
+60    * Arguments              (  Expr  MoreArguments  ) 
+61    * Arguments              ε 
+62    * MoreArguments          ,  Expr  MoreArguments 
+63    * MoreArguments          ε 
+64    Parens                   (  Expr  ) 
+65    SpaceNegVal              spacenegnum_value 
+66    SpaceNegVal              spacenegish_value 
+67    SpaceNegVal              spacenegname

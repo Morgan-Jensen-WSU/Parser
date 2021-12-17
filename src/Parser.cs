@@ -8,12 +8,15 @@ namespace Compiler
 {
     class Parser
     {
-        private const string FILE_PATH = "input/Assignment2Valid.txt";
+        private const string FILE_PATH = "input/test.txt";
         private const string RESULT_OUTPUT_PATH = "output/output.txt";
+
+        private static int ConstCounter { get; set; } = 0;
 
         private static int ParseIndex { get; set; }
         private static string PrevWord { get; set; }
         private static string CurrentLine { get; set; }
+        private static string LastBuiltString { get; set; }
 
         private List<char> Input = new List<char>();
         private TableMaker TMaker { get; set; }
@@ -86,6 +89,8 @@ namespace Compiler
 
                 CurrentLine = "";
             }
+
+            STable.TranslateToASM();
         }
 
         private bool Parse()
@@ -155,7 +160,11 @@ namespace Compiler
 
         private string NextWord()
         {
-            if (ParseIndex >= Input.Count) return "eof";
+            if (ParseIndex >= Input.Count || (ParseIndex == Input.Count - 1 && Input[Input.Count - 1] == ' ')) 
+            {
+                ParseIndex++;
+                return "eof";
+            }
 
             while (Input[ParseIndex] == ' ')
             {
@@ -169,6 +178,21 @@ namespace Compiler
             }
 
             StringBuilder builder = new StringBuilder();
+
+            if (PrevWord == "\"")
+            {
+                if (Input[ParseIndex] != '\"') builder.Append(' ');
+
+                while (Input[ParseIndex] != '\"')
+                {
+                    builder.Append(Input[ParseIndex]);
+                    ParseIndex++;
+                }
+                LastBuiltString = builder.ToString();
+                CurrentLine += (LastBuiltString + " ");
+                PrevWord = "string_value";
+                return PrevWord;
+            }
 
             do
             {
@@ -277,6 +301,31 @@ namespace Compiler
                 {
                     STable.Update(lhs[0], ir);
                 }
+            }
+            else if (CurrentLine.Contains("printString"))
+            {
+                string[] line = CurrentLine.Split(' ');
+                Variable newVar = new Variable(Variable.DecideVarType(line[0]), $"message{ConstCounter}", ir);
+                STable.Insert(newVar);
+                SymbolTable.ExecTable.Add(newVar);
+                ConstCounter++;
+            }
+            else if (CurrentLine.Contains("printNum") || CurrentLine.Contains("printIsh"))
+            {
+                string[] line = CurrentLine.Split(' ');
+                Variable newVar = new Variable(Variable.DecideVarType(line[0]), line[1], ir);
+                SymbolTable.ExecTable.Add(newVar);
+            }
+            else if (CurrentLine.Contains("readNum") || CurrentLine.Contains("readIsh"))
+            {
+                string[] line = CurrentLine.Split(' ');
+                Variable newVar = new Variable(Variable.DecideVarType(line[0]), line[1], ir);
+                SymbolTable.ExecTable.Add(newVar);
+            }
+            else    // things like num z (no '=')
+            {
+                string[] line = CurrentLine.Split(' ');
+                STable.Insert(Variable.DecideVarType(line[0]), line[1], ir);
             }
         }
     }

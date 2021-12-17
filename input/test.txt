@@ -1,9 +1,13 @@
+num x = 4 + 6
+num y
 
-num procedure add(num a, num b) {
-num result = a + b
-return result
-}
-num procedure mult(num a, num b) {
-num result = a * b
-return result
-}
+printString "Enter a number for y"
+readNum y
+
+printString "The value of x is:"
+printNum x
+
+
+printString "The value of y is:"
+printNum y
+

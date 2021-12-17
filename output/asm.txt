@@ -1,0 +1,939 @@
+var1	dd	12
+var2	dd	2
+var3	dd	2
+var4	dd	17
+var5	dd	1542
+var6	dd	0.8
+var7	dd	29
+var8	dd	42
+var9	dd	42
+var10	dd	42
+var11	dd	42
+var12	dd	7006652
+var13	dd	1
+var14	dd	10
+var15	dd	9
+var16	dd	31
+var17	dd	-973
+var18	dd	-42
+var19	dd	-42
+var20	dd	-42
+var21	dd	-var
+var22	dd	8
+var23	dd	-1
+var24	dd	-1
+var25	dd	5
+var26	dd	5
+var27	dd	-5
+var28	dd	1
+var29	dd	1
+var30	dd	1
+var31	dd	1
+var32	dd	1
+var33	dd	1
+var34	dd	1
+var35	dd	5
+var36	dd	5
+var37	dd	-3
+var38	dd	-4
+var39	dd	-4
+var40	dd	33
+var41	dd	27
+var42	dd	256
+var43	dd	19683
+var44	dd	7625597484987
+var45	dd	41
+float1	dd	3.5
+float2	dd	3.5
+float3	dd	3.55
+float4	dd	5.859808
+issue1	dd	5
+issue2	dd	7
+error	dd	=
+var49	dd	14
+var50	dd	10
+var51	dd	-10
+var52	dd	144
+var53	dd	29336
+orig	dd	6
+copy	dd	6
+result	dd	b
+var1	dd	12
+var2	dd	2
+var3	dd	2
+var4	dd	17
+var5	dd	1542
+var6	dd	0.8
+var7	dd	29
+var8	dd	42
+var9	dd	42
+var10	dd	42
+var11	dd	42
+var12	dd	7006652
+var13	dd	1
+var14	dd	10
+var15	dd	9
+var16	dd	31
+var17	dd	-973
+var18	dd	-42
+var19	dd	-42
+var20	dd	-42
+var21	dd	-42
+var22	dd	8
+var23	dd	-1
+var24	dd	-1
+var25	dd	5
+var26	dd	5
+var27	dd	-5
+var28	dd	1
+var29	dd	1
+var30	dd	1
+var31	dd	1
+var32	dd	1
+var33	dd	1
+var34	dd	1
+var35	dd	5
+var36	dd	5
+var37	dd	-3
+var38	dd	-4
+var39	dd	-4
+var40	dd	33
+var41	dd	27
+var42	dd	256
+var43	dd	19683
+var44	dd	7625597484987
+var45	dd	41
+float1	dd	3.5
+float2	dd	3.5
+float3	dd	3.55
+float4	dd	5.859808
+issue1	dd	5
+issue2	dd	7
+error	dd	=
+orig	dd	6
+copy	dd	6
+var49	dd	14
+var50	dd	10
+var51	dd	-10
+var52	dd	144
+var53	dd	29336
+user1	dd	0
+user2	dd	0
+user3	dd	0
+user4	dd	0
+userResult1	dd	0
+userResult2	dd	0
+userResult3	dd	0
+userResult4	dd	=
+result	dd	b
+result1	dd	3
+a	dd	2
+b	dd	3
+result2	dd	3
+result3	dd	3
+result4	dd	2
+result5	dd	3
+result7	dd	3
+result8	dd	3
+result9	dd	9
+userResult5	dd	0
+userResult6	dd	0
+userRadius	dd	0
+volume	dd	0
+var1	dd	12
+var2	dd	2
+var3	dd	2
+var4	dd	17
+var5	dd	1542
+var6	dd	0.8
+var7	dd	29
+var8	dd	42
+var9	dd	42
+var10	dd	42
+var11	dd	42
+var12	dd	7006652
+var13	dd	1
+var14	dd	10
+var15	dd	9
+var16	dd	31
+var17	dd	-973
+var18	dd	-42
+var19	dd	-42
+var20	dd	-42
+var21	dd	-42
+var22	dd	8
+var23	dd	-1
+var24	dd	-1
+var25	dd	5
+var26	dd	5
+var27	dd	-5
+var28	dd	1
+var29	dd	1
+var30	dd	1
+var31	dd	1
+var32	dd	1
+var33	dd	1
+var34	dd	1
+var35	dd	5
+var36	dd	5
+var37	dd	-3
+var38	dd	-4
+var39	dd	-4
+var40	dd	33
+var41	dd	27
+var42	dd	256
+var43	dd	19683
+var44	dd	7625597484987
+var45	dd	41
+float1	dd	3.5
+float2	dd	3.5
+float3	dd	3.55
+float4	dd	5.859808
+issue1	dd	5
+issue2	dd	7
+error	dd	=
+orig	dd	6
+copy	dd	6
+var49	dd	14
+var50	dd	10
+var51	dd	-10
+var52	dd	144
+var53	dd	29336
+user1	dd	0
+user2	dd	0
+user3	dd	0
+user4	dd	0
+userResult1	dd	0
+userResult2	dd	0
+userResult3	dd	0
+userResult4	dd	=
+result	dd	b
+result1	dd	3
+a	dd	2
+b	dd	3
+result2	dd	3
+result3	dd	3
+result4	dd	2
+result5	dd	3
+result7	dd	3
+result8	dd	3
+result9	dd	9
+userResult5	dd	0
+userResult6	dd	0
+userRadius	dd	0
+volume	dd	0
+var1	dd	12
+var2	dd	2
+var3	dd	2
+var4	dd	17
+var5	dd	1542
+var6	dd	0.8
+var7	dd	29
+var8	dd	42
+var9	dd	42
+var10	dd	42
+var11	dd	42
+var12	dd	7006652
+var13	dd	1
+var14	dd	10
+var15	dd	9
+var16	dd	31
+var17	dd	-973
+var18	dd	-42
+var19	dd	-42
+var20	dd	-42
+var21	dd	-42
+var22	dd	8
+var23	dd	-1
+var24	dd	-1
+var25	dd	5
+var26	dd	5
+var27	dd	-5
+var28	dd	1
+var29	dd	1
+var30	dd	1
+var31	dd	1
+var32	dd	1
+var33	dd	1
+var34	dd	1
+var35	dd	5
+var36	dd	5
+var37	dd	-3
+var38	dd	-4
+var39	dd	-4
+var40	dd	33
+var41	dd	27
+var42	dd	256
+var43	dd	19683
+var44	dd	7625597484987
+var45	dd	41
+float1	dd	3.5
+float2	dd	3.5
+float3	dd	3.55
+float4	dd	5.859808
+issue1	dd	5
+issue2	dd	7
+error	dd	=
+orig	dd	6
+copy	dd	6
+var49	dd	14
+var50	dd	10
+var51	dd	-10
+var52	dd	144
+var53	dd	29336
+user1	dd	0
+user2	dd	0
+user3	dd	0
+user4	dd	0
+userResult1	dd	0
+userResult2	dd	0
+userResult3	dd	0
+userResult4	dd	=
+result	dd	b
+result1	dd	3
+a	dd	2
+b	dd	3
+result2	dd	3
+result3	dd	3
+result4	dd	2
+result5	dd	3
+result7	dd	3
+result8	dd	3
+result9	dd	9
+userResult5	dd	0
+userResult6	dd	0
+userRadius	dd	0
+volume	dd	0
+var1	dd	12
+var2	dd	2
+var3	dd	2
+var4	dd	17
+var5	dd	1542
+var6	dd	0.8
+var7	dd	29
+var8	dd	42
+var9	dd	42
+var10	dd	42
+var11	dd	42
+var12	dd	7006652
+var13	dd	1
+var14	dd	10
+var15	dd	9
+var16	dd	31
+var17	dd	-973
+var18	dd	-42
+var19	dd	-42
+var20	dd	-42
+var21	dd	-42
+var22	dd	8
+var23	dd	-1
+var24	dd	-1
+var25	dd	5
+var26	dd	5
+var27	dd	-5
+var28	dd	1
+var29	dd	1
+var30	dd	1
+var31	dd	1
+var32	dd	1
+var33	dd	1
+var34	dd	1
+var35	dd	5
+var36	dd	5
+var37	dd	-3
+var38	dd	-4
+var39	dd	-4
+var40	dd	33
+var41	dd	27
+var42	dd	256
+var43	dd	19683
+var44	dd	7625597484987
+var45	dd	41
+float1	dd	3.5
+float2	dd	3.5
+float3	dd	3.55
+float4	dd	5.859808
+issue1	dd	5
+issue2	dd	7
+error	dd	=
+orig	dd	6
+copy	dd	6
+var49	dd	14
+var50	dd	10
+var51	dd	-10
+var52	dd	144
+var53	dd	29336
+user1	dd	0
+user2	dd	0
+user3	dd	0
+user4	dd	0
+userResult1	dd	0
+userResult2	dd	0
+userResult3	dd	0
+userResult4	dd	=
+result	dd	b
+result1	dd	3
+a	dd	2
+b	dd	3
+result2	dd	3
+result3	dd	3
+result4	dd	2
+result5	dd	3
+result7	dd	3
+result8	dd	3
+result9	dd	9
+userResult5	dd	0
+userResult6	dd	0
+userRadius	dd	0
+volume	dd	0
+var1	dd	12
+var2	dd	2
+var3	dd	2
+var4	dd	17
+var5	dd	1542
+var6	dd	0.8
+var7	dd	29
+var8	dd	42
+var9	dd	42
+var10	dd	42
+var11	dd	42
+var12	dd	7006652
+var13	dd	1
+var14	dd	10
+var15	dd	9
+var16	dd	31
+var17	dd	-973
+var18	dd	-42
+var19	dd	-42
+var20	dd	-42
+var21	dd	-42
+var22	dd	8
+var23	dd	-1
+var24	dd	-1
+var25	dd	5
+var26	dd	5
+var27	dd	-5
+var28	dd	1
+var29	dd	1
+var30	dd	1
+var31	dd	1
+var32	dd	1
+var33	dd	1
+var34	dd	1
+var35	dd	5
+var36	dd	5
+var37	dd	-3
+var38	dd	-4
+var39	dd	-4
+var40	dd	33
+var41	dd	27
+var42	dd	256
+var43	dd	19683
+var44	dd	7625597484987
+var45	dd	41
+float1	dd	3.5
+float2	dd	3.5
+float3	dd	3.55
+float4	dd	5.859808
+issue1	dd	5
+issue2	dd	7
+error	dd	=
+orig	dd	6
+copy	dd	6
+var49	dd	14
+var50	dd	10
+var51	dd	-10
+var52	dd	144
+var53	dd	29336
+user1	dd	0
+user2	dd	0
+user3	dd	0
+user4	dd	0
+userResult1	dd	0
+userResult2	dd	0
+userResult3	dd	0
+userResult4	dd	=
+result	dd	b
+result1	dd	3
+a	dd	2
+b	dd	3
+result2	dd	3
+result3	dd	3
+result4	dd	2
+result5	dd	3
+result7	dd	3
+result8	dd	3
+result9	dd	9
+userResult5	dd	0
+userResult6	dd	0
+userRadius	dd	0
+volume	dd	0
+x	dd	8
+x	dd	8
+printString " This is a test " 	dd	This is a test
+message0	db	This is a test
+message0	db	This is a test
+message0	db	This is a test
+message0	db	This is a test
+message0	db	This is a test
+message0	db	Second string
+message0	db	This is a test
+message1	db	Second string
+message0	db	This is a test
+message1	db	Second string
+message0	db	This is a test
+message1	db	Second string
+x	db	8
+y	db	9
+message0	db	This is a test
+message1	db	Second string
+x	db	8
+y	db	9
+message0	db	This is a test
+message1	db	Second string
+x	dd	8
+y	dd	9
+message0	dd	This is a test
+message1	dd	Second string
+x:	db	8
+y:	db	9
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8
+y:	dd	9
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8	; a(n) num
+y:	dd	9	; a(n) num
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8	; a(n) num
+y:	dd	9	; a(n) num
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8	; a(n) num
+y:	dd	9	; a(n) num
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8	; a(n) num
+y:	dd	9	; a(n) num
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8	; a(n) num
+y:	dd	9	; a(n) num
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8	; a(n) num
+y:	dd	9	; a(n) num
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+x:	dd	8	; a(n) num
+y:	dd	9	; a(n) num
+message0:	db	"This is a test", 0	; a const string
+message1:	db	"Second string", 0	; a const string
+z:	dd	z	; a(n) num
+z	resd	1	; an int
+z	resd	1	; an int
+i	resd	1	; a float
+z	resd	1	; an int
+i	resd	4	; a float
+z	resd	1	; an int
+i	resd	4	; a float
+z:	resd	1	; an int
+i:	resd	4	; a float
+z:	resd	1	; an int
+i:	resd	4	; a float
+z:	resd	1	; an int
+i:	resd	4	; a float
+message0:	db	"This is a test", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+
+
+message1:	db	"Test Complete", 0	; a const string
+message0:	db	"This is a test", 0	; a const string
+x:	resd	1	; an int
+y:	resd	1	; an int
+message1:	db	"Test Complete", 0	; a const string
+x:	resd	1	; an int
+x:	resd	1	; an int
+x:	dd	3	; a(n) num
+message0:	db	"esting ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+message1:	db	"inished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+z:	resd	4	; a float
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+z:	dd	3.14	; a(n) ish
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+z:	dd	3.14	; a(n) ish
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+z:	dd	3.14	; a(n) ish
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+z:	dd	3.14	; a(n) ish
+message1:	db	"Finished", 0	; a const string
+message0:	db	"Testing ... Start", 0	; a const string
+x:	dd	3	; a(n) num
+y:	dd	4	; a(n) num
+z:	dd	3.14	; a(n) ish
+message1:	db	"Finished", 0	; a const string
+
+
+
+message0:	db	"test", 0	; a const string
+x:	resd	1	; an int
+
+message0:	db	"test", 0	; a const string
+x:	resd	1	; an int
+x:	resd	1	; an int
+x:	resd	1	; an int
+x:	resd	1	; an int
+x:	resd	1	; an int
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resd	4	; a float
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resd	4	; a float
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resd	4	; a float
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resd	1	; a float
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resds	1	; a float
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resdd	1	; a float
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resd	1	; a float
+message0:	db	"Enter a number:", 0	; a const string
+message1:	db	"Your number is:", 0	; a const string
+x:	resd	1	; an int
+y:	resd	1	; an int
+message0:	db	"Enter a number for x:", 0	; a const string
+message1:	db	"Enter a number for y:", 0	; a const string
+message2:	db	"Your number is:", 0	; a const string
+x:	resd	1	; an int
+y:	resd	1	; an int
+message0:	db	"Enter a number for x:", 0	; a const string
+message1:	db	"Enter a number for y:", 0	; a const string
+message2:	db	"Your number is:", 0	; a const string
+x:	resd	1	; an int
+y:	resd	1	; an int
+message0:	db	"Enter a number for x:", 0	; a const string
+message1:	db	"Enter a number for y:", 0	; a const string
+message2:	db	"Your number is:", 0	; a const string
+z:	dd	y	; a(n) num
+x:	dd	10	; a(n) num
+y:	resd	1	; an int
+message0:	db	"Enter a number for y", 0	; a const string
+message1:	db	"The value of x is:", 0	; a const string
+message2:	db	"The value of y is:", 0	; a const string
+var1:	dd	12	; a(n) num
+var2:	dd	2	; a(n) num
+var3:	dd	2	; a(n) num
+var4:	dd	17	; a(n) num
+var5:	dd	1542	; a(n) num
+var6:	dd	0.8	; a(n) num
+var7:	dd	29	; a(n) num
+var8:	dd	42	; a(n) num
+var9:	dd	42	; a(n) num
+var10:	dd	42	; a(n) num
+var11:	dd	42	; a(n) num
+var12:	dd	7006652	; a(n) num
+var13:	dd	1	; a(n) num
+var14:	dd	10	; a(n) num
+var15:	dd	9	; a(n) num
+var16:	dd	31	; a(n) num
+var17:	dd	-973	; a(n) num
+var18:	dd	-42	; a(n) num
+var19:	dd	-42	; a(n) num
+var20:	dd	-42	; a(n) num
+var21:	dd	-42	; a(n) num
+var22:	dd	8	; a(n) num
+var23:	dd	-1	; a(n) num
+var24:	dd	-1	; a(n) num
+var25:	dd	5	; a(n) num
+var26:	dd	5	; a(n) num
+var27:	dd	-5	; a(n) num
+var28:	dd	1	; a(n) num
+var29:	dd	1	; a(n) num
+var30:	dd	1	; a(n) num
+var31:	dd	1	; a(n) num
+var32:	dd	1	; a(n) num
+var33:	dd	1	; a(n) num
+var34:	dd	1	; a(n) num
+var35:	dd	5	; a(n) num
+var36:	dd	5	; a(n) num
+var37:	dd	-3	; a(n) num
+var38:	dd	-4	; a(n) num
+var39:	dd	-4	; a(n) num
+var40:	dd	33	; a(n) num
+var41:	dd	27	; a(n) num
+var42:	dd	256	; a(n) num
+var43:	dd	19683	; a(n) num
+var44:	dd	7625597484987	; a(n) num
+var45:	dd	41	; a(n) num
+float1:	dd	3.5	; a(n) ish
+float2:	dd	3.5	; a(n) ish
+float3:	dd	3.55	; a(n) ish
+float4:	dd	5.859808	; a(n) ish
+issue1:	dd	5	; a(n) num
+issue2:	dd	7	; a(n) num
+error:	resd	1	; an int
+orig:	dd	6	; a(n) num
+copy:	dd	6	; a(n) num
+var49:	dd	14	; a(n) num
+var50:	dd	10	; a(n) num
+var51:	dd	-10	; a(n) num
+var52:	dd	144	; a(n) num
+var53:	dd	29336	; a(n) num
+message0:	db	"This begins the user input section", 0	; a const string
+message1:	db	"Supply data and hit enter", 0	; a const string
+message2:	db	"Enter a number:", 0	; a const string
+user1:	dd	0	; a(n) num
+message3:	db	"Enter a number:", 0	; a const string
+user2:	dd	0	; a(n) num
+message4:	db	"Enter a number:", 0	; a const string
+user3:	dd	0	; a(n) num
+message5:	db	"Enter a number:", 0	; a const string
+user4:	dd	0	; a(n) num
+userResult1:	dd	0	; a(n) num
+userResult2:	dd	0	; a(n) num
+userResult3:	dd	0	; a(n) num
+userResult4:	resd	1	; an int
+procedure:	resd	1	; an int
+result:	resd	1	; an int
+
+
+procedure:	resd	1	; an int
+
+
+result1:	dd	3	; a(n) num
+a:	dd	2	; a(n) num
+b:	dd	3	; a(n) num
+result2:	dd	3	; a(n) num
+result3:	dd	3	; a(n) num
+result4:	dd	2	; a(n) num
+result5:	dd	3	; a(n) num
+result7:	dd	3	; a(n) num
+result8:	dd	3	; a(n) num
+result9:	dd	9	; a(n) num
+message6:	db	"Result of adding first and second user inputs:", 0	; a const string
+userResult5:	dd	0	; a(n) num
+message7:	db	"Result of multiplying third and fourth user inputs:", 0	; a const string
+userResult6:	dd	0	; a(n) num
+
+
+message8:	db	"Enter a radius:", 0	; a const string
+userRadius:	dd	0	; a(n) num
+volume:	dd	0	; a(n) num
+message9:	db	"The volume is:", 0	; a const string
+message10:	db	"Congratulations on the great semester!", 0	; a const string
+var1:	dd	12	; a(n) num
+var2:	dd	2	; a(n) num
+var3:	dd	2	; a(n) num
+var4:	dd	17	; a(n) num
+var5:	dd	1542	; a(n) num
+var6:	dd	0.8	; a(n) num
+var7:	dd	29	; a(n) num
+var8:	dd	42	; a(n) num
+var9:	dd	42	; a(n) num
+var10:	dd	42	; a(n) num
+var11:	dd	42	; a(n) num
+var12:	dd	7006652	; a(n) num
+var13:	dd	1	; a(n) num
+var14:	dd	10	; a(n) num
+var15:	dd	9	; a(n) num
+var16:	dd	31	; a(n) num
+var17:	dd	-973	; a(n) num
+var18:	dd	-42	; a(n) num
+var19:	dd	-42	; a(n) num
+var20:	dd	-42	; a(n) num
+var21:	dd	-42	; a(n) num
+var22:	dd	8	; a(n) num
+var23:	dd	-1	; a(n) num
+var24:	dd	-1	; a(n) num
+var25:	dd	5	; a(n) num
+var26:	dd	5	; a(n) num
+var27:	dd	-5	; a(n) num
+var28:	dd	1	; a(n) num
+var29:	dd	1	; a(n) num
+var30:	dd	1	; a(n) num
+var31:	dd	1	; a(n) num
+var32:	dd	1	; a(n) num
+var33:	dd	1	; a(n) num
+var34:	dd	1	; a(n) num
+var35:	dd	5	; a(n) num
+var36:	dd	5	; a(n) num
+var37:	dd	-3	; a(n) num
+var38:	dd	-4	; a(n) num
+var39:	dd	-4	; a(n) num
+var40:	dd	33	; a(n) num
+var41:	dd	27	; a(n) num
+var42:	dd	256	; a(n) num
+var43:	dd	19683	; a(n) num
+var44:	dd	7625597484987	; a(n) num
+var45:	dd	41	; a(n) num
+float1:	dd	3.5	; a(n) ish
+float2:	dd	3.5	; a(n) ish
+float3:	dd	3.55	; a(n) ish
+float4:	dd	5.859808	; a(n) ish
+issue1:	dd	5	; a(n) num
+issue2:	dd	7	; a(n) num
+error:	resd	1	; an int
+orig:	dd	6	; a(n) num
+copy:	dd	6	; a(n) num
+var49:	dd	14	; a(n) num
+var50:	dd	10	; a(n) num
+var51:	dd	-10	; a(n) num
+var52:	dd	144	; a(n) num
+var53:	dd	29336	; a(n) num
+message0:	db	"This begins the user input section", 0	; a const string
+message1:	db	"Supply data and hit enter", 0	; a const string
+message2:	db	"Enter a number:", 0	; a const string
+user1:	dd	0	; a(n) num
+message3:	db	"Enter a number:", 0	; a const string
+user2:	dd	0	; a(n) num
+message4:	db	"Enter a number:", 0	; a const string
+user3:	dd	0	; a(n) num
+message5:	db	"Enter a number:", 0	; a const string
+user4:	dd	0	; a(n) num
+userResult1:	dd	0	; a(n) num
+userResult2:	dd	0	; a(n) num
+userResult3:	dd	0	; a(n) num
+userResult4:	resd	1	; an int
+procedure:	resd	1	; an int
+result:	resd	1	; an int
+
+
+procedure:	resd	1	; an int
+
+
+result1:	dd	3	; a(n) num
+a:	dd	2	; a(n) num
+b:	dd	3	; a(n) num
+result2:	dd	3	; a(n) num
+result3:	dd	3	; a(n) num
+result4:	dd	2	; a(n) num
+result5:	dd	3	; a(n) num
+result7:	dd	3	; a(n) num
+result8:	dd	3	; a(n) num
+result9:	dd	9	; a(n) num
+message6:	db	"Result of adding first and second user inputs:", 0	; a const string
+userResult5:	dd	0	; a(n) num
+message7:	db	"Result of multiplying third and fourth user inputs:", 0	; a const string
+userResult6:	dd	0	; a(n) num
+
+
+message8:	db	"Enter a radius:", 0	; a const string
+userRadius:	dd	0	; a(n) num
+volume:	dd	0	; a(n) num
+message9:	db	"The volume is:", 0	; a const string
+message10:	db	"Congratulations on the great semester!", 0	; a const string
+x:	dd	10	; a(n) num
+y:	resd	1	; an int
+message0:	db	"Enter a number for y", 0	; a const string
+message1:	db	"The value of x is:", 0	; a const string
+message2:	db	"The value of y is:", 0	; a const string

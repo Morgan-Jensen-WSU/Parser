@@ -1,5 +1,0 @@
-ERROR: A variable called issue1 already exists in this instance.
-ERROR: Cannot divide by zero.
-ERROR: Variable b does not exist in this context.
-ERROR: Variable b does not exist in this context.
-ERROR: A variable called result already exists in this instance.
